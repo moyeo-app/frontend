@@ -1,5 +1,5 @@
 // app/login.tsx
-import { PrimaryButton, PrimaryInput } from "@/common";
+import { PrimaryButton, PrimaryInput } from "@/styles/common";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Image, Text } from "react-native";

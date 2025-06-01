@@ -1,5 +1,5 @@
 // app/character-select.tsx
-import { PrimaryButton, PrimaryInput } from "@/common";
+import { PrimaryButton, PrimaryInput } from "@/styles/common";
 import { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import styled from "styled-components/native";
