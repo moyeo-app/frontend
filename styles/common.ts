@@ -16,3 +16,7 @@ export const PrimaryInput = styled.TextInput`
   margin-bottom: 12px;
   width: 100%;
 `;
+
+export const WarningTxt = styled.Text`
+  color: red;
+`;
