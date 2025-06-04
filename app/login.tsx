@@ -1,4 +1,5 @@
 // app/login.tsx
+import KakaoLoginButton from "@/components/KakaoLoginButton";
 import { PrimaryButton, PrimaryInput } from "@/styles/common";
 import { useRouter } from "expo-router";
 import { useState } from "react";
@@ -34,9 +35,7 @@ export default function LoginScreen() {
         <Text>로그인</Text>
       </PrimaryButton>
       <SocialCon>
-        <SocialLoginBtn>
-          <Image source={require("../assets/images/kakao.png")} />
-        </SocialLoginBtn>
+        <KakaoLoginButton />
         <SocialLoginBtn>
           <Image source={require("../assets/images/google.png")} />
         </SocialLoginBtn>

@@ -1,7 +1,8 @@
 {
   "expo": {
     "name": "frontend",
-    "slug": "frontend",
+    "slug": "moyeomoyeo",
+    "owner": "yeeun426",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -9,7 +10,8 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.yeeun426.moyeomoyeo"
     },
     "android": {
       "adaptiveIcon": {
