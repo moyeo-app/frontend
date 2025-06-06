@@ -1,4 +1,5 @@
 import { PrimaryButton, PrimaryInput, WarningTxt } from "@/styles/common";
+import { useRouter } from "expo-router";
 import { useState } from "react";
 import {
   Dimensions,
@@ -12,6 +13,7 @@ import styled from "styled-components/native";
 export default function CharacterSelect() {
   const [selected, setSelected] = useState(0);
   const [nickname, setNickname] = useState("");
+  const router = useRouter();
 
   const characters = [
     require("../assets/images/rabbit.png"),
@@ -19,6 +21,10 @@ export default function CharacterSelect() {
     require("../assets/images/cat.png"),
     require("../assets/images/pig.png"),
   ];
+
+  const handleMain = () => {
+    router.replace({ pathname: "/(tabs)/home" });
+  };
 
   return (
     <Container>
@@ -44,7 +50,7 @@ export default function CharacterSelect() {
         value={nickname}
         onChangeText={setNickname}
       />
-      <PrimaryButton>
+      <PrimaryButton onPress={handleMain}>
         <Text>START</Text>
       </PrimaryButton>
     </Container>
@@ -52,7 +58,11 @@ export default function CharacterSelect() {
 }
 
 const styles = StyleSheet.create({
-  title: { fontSize: 16, fontWeight: "bold", marginVertical: 10 },
+  title: {
+    fontSize: 16,
+    marginVertical: 10,
+    fontFamily: "Paperlogy-Bold",
+  },
   charRow: {
     flexDirection: "row",
     justifyContent: "space-around",

@@ -19,4 +19,6 @@ export const PrimaryInput = styled.TextInput`
 
 export const WarningTxt = styled.Text`
   color: red;
+  font-size: 13px;
+  font-family: "Paperlogy-Regular";
 `;
