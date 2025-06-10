@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Image,
+  ImageBackground,
   ScrollView,
   StyleSheet,
   Text,
@@ -9,66 +10,90 @@ import {
 } from "react-native";
 
 const Home = () => {
+  const today = new Date();
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+  const formattedDate = `Today, ${today.getDate()} ${monthNames[today.getMonth()]}`;
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.headerHome}>
+      <ImageBackground
+        source={require("../../assets/images/header_home.png")} // 원하는 이미지 경로로 변경
+        style={styles.headerHome}
+      >
         <View style={styles.overlapGroup}>
           <View style={styles.overlap}>
             <View style={styles.profileImg}>
               <Image
                 style={styles.chatgptImage}
-                source={require("../../assets/images/google.png")}
+                source={require("../../assets/images/cat.png")}
               />
             </View>
           </View>
           <Text style={styles.username}>예은</Text>
         </View>
-      </View>
-
-      <View style={styles.dateContainer}>
-        <Text style={styles.todayDate}>{`Today, 8 Jul`}</Text>
-        <Text style={styles.yourActivities}>오늘의 챌린지</Text>
-      </View>
-
-      <View style={styles.calendarRow}>
-        <Text style={styles.calendarText}>5</Text>
-        <Text style={styles.calendarText}>6</Text>
-        <Text style={styles.calendarText}>7</Text>
-        <View style={styles.activeDate}>
-          <Text style={styles.activeDateText}>Today, 8 Jul</Text>
+      </ImageBackground>
+      <View style={styles.conHome}>
+        <View style={styles.dateContainer}>
+          <Text style={styles.todayDate}>{formattedDate}</Text>
+          <Text style={styles.yourActivities}>오늘의 챌린지</Text>
         </View>
-        <Text style={styles.calendarText}>9</Text>
-        <Text style={styles.calendarText}>10</Text>
-        <Text style={styles.calendarText}>11</Text>
-      </View>
 
-      <View style={styles.scheduleBox}>
-        <Text style={styles.scheduleText}>6:00 - 7:00 미라클 모닝</Text>
-      </View>
-      <Text style={styles.scheduleTextGray}>9:00 - 16:00 모각코</Text>
-      <Text style={styles.scheduleTextGray}>20:00 - 21:00 : 알고리즘</Text>
+        <View style={styles.calendarRow}>
+          <Text style={styles.calendarText}>{today.getDate() - 3}</Text>
+          <Text style={styles.calendarText}>{today.getDate() - 2}</Text>
+          <Text style={styles.calendarText}>{today.getDate() - 1}</Text>
+          <View style={styles.activeDate}>
+            <Text style={styles.activeDateText}>{formattedDate}</Text>
+          </View>
+          <Text style={styles.calendarText}>{today.getDate() + 1}</Text>
+          <Text style={styles.calendarText}>{today.getDate() + 2}</Text>
+          <Text style={styles.calendarText}>{today.getDate() + 3}</Text>
+        </View>
 
-      <Text style={styles.selectChallenge}>당신의 챌린지를 골라보세요 !</Text>
-      {/* <Image source={weuiArrowOutlined} style={styles.arrowIcon} /> 화살표 */}
-      <View style={styles.cardRow}>
-        <View>
-          <Text>Card1</Text>
+        <View style={styles.scheduleBox}>
+          <Text style={styles.scheduleText}>6:00 - 7:00 미라클 모닝</Text>
         </View>
-        <View>
-          <Text>Card2</Text>
-        </View>
-        <View>
-          <Text>Card3</Text>
-        </View>
-      </View>
+        <Text style={styles.scheduleTextGray}>9:00 - 16:00 모각코</Text>
+        <Text style={styles.scheduleTextGray}>20:00 - 21:00 : 알고리즘</Text>
 
-      <View style={styles.btnContainer}>
-        <View style={styles.btnBackground}>
-          <Text style={styles.btnText}>맘에 드는 챌린지가 없나요 ?</Text>
-          <TouchableOpacity style={styles.makeNowBtn}>
-            <Text style={styles.makeNowText}>Make Now</Text>
-            {/* <IconlyBoldArrow /> */}
-          </TouchableOpacity>
+        <Text style={styles.selectChallenge}>당신의 챌린지를 골라보세요 !</Text>
+        <View style={styles.cardRow}>
+          <View style={styles.cardItem}>
+            <Text>모각코</Text>
+            <Text>₩ 20000</Text>
+          </View>
+          <View style={styles.cardItem}>
+            <Text>모각코</Text>
+            <Text>₩ 20000</Text>
+          </View>
+          <View style={styles.cardItem}>
+            <Text>모각코</Text>
+            <Text>₩ 20000</Text>
+          </View>
+        </View>
+
+        <View style={styles.btnContainer}>
+          <View style={styles.btnBackground}>
+            <Text style={styles.btnText}>맘에 드는 챌린지가 없나요 ?</Text>
+            <TouchableOpacity style={styles.makeNowBtn}>
+              <Text style={styles.makeNowText}>Make Now</Text>
+              {/* <IconlyBoldArrow /> */}
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </ScrollView>
@@ -78,39 +103,41 @@ const Home = () => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#ffffff",
-    alignItems: "center",
     flex: 1,
     justifyContent: "center",
   },
   headerHome: {
     width: "100%",
-    height: 180,
-    backgroundColor: "#ddd",
+    height: 200,
     alignItems: "center",
     justifyContent: "center",
   },
-  overlapGroup: {
+  conHome: {
     alignItems: "center",
   },
+  overlapGroup: {
+    alignItems: "center",
+    marginTop: 20,
+  },
   overlap: {
-    width: 95,
-    height: 95,
+    width: 80,
+    height: 80,
     borderRadius: 47.5,
     backgroundColor: "#ffffff",
     alignItems: "center",
     justifyContent: "center",
   },
   profileImg: {
-    width: 95,
-    height: 95,
+    width: 80,
+    height: 80,
     borderRadius: 47.5,
     backgroundColor: "#ffffff",
     alignItems: "center",
     justifyContent: "center",
   },
   chatgptImage: {
-    width: 60,
-    height: 60,
+    width: 70,
+    height: 70,
     resizeMode: "contain",
   },
   dot: {
@@ -126,7 +153,7 @@ const styles = StyleSheet.create({
   },
   dateContainer: {
     alignItems: "center",
-    marginVertical: 20,
+    marginTop: 20,
   },
   todayDate: {
     fontSize: 16,
@@ -134,7 +161,7 @@ const styles = StyleSheet.create({
   },
   yourActivities: {
     fontSize: 24,
-    fontFamily: "Jua-Regular",
+    fontFamily: "Paperlogy-Regular",
   },
   scheduleBox: {
     backgroundColor: "#ff8c00cc",
@@ -142,6 +169,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderRadius: 20,
     marginVertical: 5,
+    alignItems: "center",
   },
   scheduleText: {
     color: "#fff",
@@ -176,8 +204,12 @@ const styles = StyleSheet.create({
   },
   selectChallenge: {
     fontSize: 20,
-    fontFamily: "Jua-Regular",
-    marginTop: 10,
+    fontFamily: "Paperlogy-Bold",
+    marginTop: 40,
+    alignSelf: "stretch",
+    textAlign: "left",
+    width: "80%",
+    margin: "auto",
   },
   arrowIcon: {
     width: 12,
@@ -189,7 +221,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     width: "90%",
-    marginVertical: 20,
+    marginVertical: 15,
   },
   btnContainer: {
     marginTop: 10,
@@ -201,6 +233,10 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     padding: 15,
     alignItems: "center",
+    display: "flex",
+    flexDirection: "row",
+    gap: 30,
+    justifyContent: "center",
   },
   btnText: {
     color: "#fff",
@@ -212,7 +248,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 8,
     padding: 5,
-    marginTop: 8,
     alignItems: "center",
   },
   makeNowText: {
@@ -220,6 +255,14 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "600",
     marginRight: 4,
+  },
+  cardItem: {
+    backgroundColor: "#65CF58",
+    height: 130,
+    width: 110,
+    marginLeft: 20,
+    borderRadius: 24,
+    padding: 20,
   },
 });
 
