@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import LinearGradient from "react-native-linear-gradient";
 
 const { width } = Dimensions.get("window");
 
@@ -35,16 +36,19 @@ export default function CustomTabBar({
           }
         };
 
-        // 중앙 탭 (녹음 버튼)
-        if (route.name === "record") {
+        // 중앙 탭 (home 버튼)
+        if (route.name === "home") {
           return (
-            <TouchableOpacity
-              key={route.key}
-              onPress={onPress}
+            <LinearGradient
+              start={{ x: 0, y: 0 }}
+              end={{ x: 0, y: 1 }}
+              colors={["#FD371F", "#FF844B"]}
               style={styles.centerButton}
             >
-              <Ionicons name="play" size={28} color="white" />
-            </TouchableOpacity>
+              <TouchableOpacity key={route.key} onPress={onPress}>
+                <Ionicons name="home-outline" size={18} color="white" />
+              </TouchableOpacity>{" "}
+            </LinearGradient>
           );
         }
 
@@ -55,11 +59,13 @@ export default function CustomTabBar({
             onPress={onPress}
             style={styles.tabButton}
           >
-            <Ionicons
-              name={getIcon(route.name)}
-              size={22}
-              color={isFocused ? "#FF6A00" : "#ccc"}
-            />
+            {!isFocused && (
+              <Ionicons
+                name={getIcon(route.name)}
+                size={22}
+                color={isFocused ? "#FF6A00" : "#ccc"}
+              />
+            )}
             {isFocused && <Text style={styles.tabLabel}>{label}</Text>}
             {isFocused && <View style={styles.dot} />}
           </TouchableOpacity>
@@ -73,12 +79,14 @@ function getIcon(routeName: string) {
   switch (routeName) {
     case "challenge":
       return "trophy-outline";
-    case "home":
-      return "home-outline";
+    case "study":
+      return "pencil-outline";
     case "profile":
       return "location-outline";
-    case "health":
-      return "heart-outline";
+    case "search":
+      return "search-outline";
+    case "search":
+      return "search-outline";
     default:
       return "ellipse-outline";
   }
@@ -96,6 +104,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: -2 },
     shadowRadius: 10,
     elevation: 5,
+    paddingHorizontal: 20,
   },
   tabButton: {
     alignItems: "center",
@@ -117,13 +126,12 @@ const styles = StyleSheet.create({
     width: 64,
     height: 64,
     borderRadius: 32,
-    backgroundColor: "#FF6A00",
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 20,
-    shadowColor: "#FF6A00",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
+    shadowColor: "#F15223",
+    shadowOffset: { width: 0, height: 12 },
+    shadowOpacity: 0.2,
     shadowRadius: 6,
     elevation: 6,
   },

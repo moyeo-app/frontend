@@ -9,11 +9,11 @@ export default function TabLayout() {
       }}
       tabBar={(props) => <CustomTabBar {...props} />}
     >
+      <Tabs.Screen name="challenge" />
+      <Tabs.Screen name="study" />
       <Tabs.Screen name="home" />
-      <Tabs.Screen name="map" />
-      <Tabs.Screen name="record" />
-      <Tabs.Screen name="health" />
-      <Tabs.Screen name="medal" />
+      <Tabs.Screen name="search" />
+      <Tabs.Screen name="profile" />
     </Tabs>
   );
 }
