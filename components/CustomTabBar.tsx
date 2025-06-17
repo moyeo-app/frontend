@@ -1,5 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
+import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import {
   Dimensions,
@@ -8,7 +9,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import LinearGradient from "react-native-linear-gradient";
 
 const { width } = Dimensions.get("window");
 
@@ -44,10 +44,11 @@ export default function CustomTabBar({
               end={{ x: 0, y: 1 }}
               colors={["#FD371F", "#FF844B"]}
               style={styles.centerButton}
+              key={route.key}
             >
               <TouchableOpacity key={route.key} onPress={onPress}>
                 <Ionicons name="home-outline" size={18} color="white" />
-              </TouchableOpacity>{" "}
+              </TouchableOpacity>
             </LinearGradient>
           );
         }
