@@ -1,3 +1,4 @@
+import Header from "@/components/Header";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
@@ -6,13 +7,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 export default function challenge() {
   return (
     <SafeAreaView>
+      <Header title="챌린지" />
       <ScrollView contentContainerStyle={styles.wrapper}>
-        <View style={styles.header}>
-          <Ionicons name="chevron-back" size={20} color="orange" />
-          <Text style={styles.title}>챌린지</Text>
-          <Ionicons name="search-outline" size={20} color="#BABABA" />
-          <Ionicons name="people-outline" size={20} color="#BABABA" />
-        </View>
         <View style={styles.challengeCard}>
           <Ionicons name="calendar" size={20} color="orange" />
           <View style={styles.challengeContent}>
@@ -99,24 +95,13 @@ export default function challenge() {
 const styles = StyleSheet.create({
   wrapper: {
     padding: 20,
+    paddingTop: 0,
     backgroundColor: "#fff",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-    marginBottom: 20,
   },
   icon: {
     width: 24,
     height: 24,
     marginHorizontal: 5,
-  },
-  title: {
-    flex: 1,
-    fontSize: 16,
-    fontWeight: "bold",
-    textAlign: "center",
   },
   challengeCard: {
     backgroundColor: "#fff",
@@ -137,6 +122,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignContent: "space-between",
+    flex: 1,
   },
   calendarIcon: {
     width: 24,
