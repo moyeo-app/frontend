@@ -6,17 +6,17 @@ export default function Header({ title }: { title: string }) {
   return (
     <View style={styles.header}>
       <View style={styles.leftInfo}>
-        <Ionicons name="chevron-back" size={20} />
+        <Ionicons name="chevron-back" size={22} />
         <Text style={styles.title}>{title}</Text>
       </View>
       <View style={styles.rightIcons}>
         <Ionicons
           name="search-outline"
-          size={20}
+          size={22}
           color="#BABABA"
           style={styles.iconSpacing}
         />
-        <Ionicons name="people-outline" size={20} color="#BABABA" />
+        <Ionicons name="people-outline" size={22} color="#BABABA" />
       </View>
     </View>
   );
