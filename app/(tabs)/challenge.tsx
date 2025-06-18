@@ -1,116 +1,48 @@
+import FixedBtn from "@/components/FixedBtn";
 import Header from "@/components/Header";
 import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
 import React from "react";
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function challenge() {
-  const goToMakeChallenge = () => {
-    router.push("/make-challenge");
-  };
-
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <Header title="챌린지" />
-      <ScrollView contentContainerStyle={styles.wrapper}>
-        <View style={styles.inputContainer}>
-          <TextInput
-            placeholder="Search Challenge"
-            placeholderTextColor="#878787"
-            style={styles.input}
-          />
-          <Ionicons name="search-outline" size={18} color="black" />
-        </View>
-        <View style={styles.challengeCard}>
-          <Ionicons name="calendar" size={22} color="orange" />
-          <View style={styles.challengeContent}>
-            <View>
-              <Text style={styles.subText}>5.15 ~ 8.15</Text>
-              <Text style={styles.titleText}>알고리즘 같이해요 !</Text>
-            </View>
-            <View>
-              <Text style={styles.subText}>9:00 - 16:00</Text>
-              <Text style={styles.countText}>10/10</Text>
-            </View>
+
+      <View style={{ flex: 1 }}>
+        <ScrollView contentContainerStyle={styles.wrapper}>
+          <View style={styles.inputContainer}>
+            <TextInput
+              placeholder="Search Challenge"
+              placeholderTextColor="#878787"
+              style={styles.input}
+            />
+            <Ionicons name="search-outline" size={18} color="black" />
           </View>
-        </View>
-        <View style={styles.challengeCard}>
-          <Ionicons name="calendar" size={22} color="#BABABA" />
-          <View style={styles.challengeContent}>
-            <View>
-              <Text style={styles.subText}>5.15 ~ 8.15</Text>
-              <Text style={styles.titleText}>알고리즘 같이해요 !</Text>
+
+          {Array.from({ length: 6 }).map((_, idx) => (
+            <View key={idx} style={styles.challengeCard}>
+              <Ionicons
+                name="calendar"
+                size={22}
+                color={idx === 0 ? "orange" : "#BABABA"}
+              />
+              <View style={styles.challengeContent}>
+                <View>
+                  <Text style={styles.subText}>5.15 ~ 8.15</Text>
+                  <Text style={styles.titleText}>알고리즘 같이해요 !</Text>
+                </View>
+                <View>
+                  <Text style={styles.subText}>9:00 - 16:00</Text>
+                  <Text style={styles.countText}>10/10</Text>
+                </View>
+              </View>
             </View>
-            <View>
-              <Text style={styles.subText}>9:00 - 16:00</Text>
-              <Text style={styles.countText}>10/10</Text>
-            </View>
-          </View>
-        </View>
-        <View style={styles.challengeCard}>
-          <Ionicons name="calendar" size={22} color="#BABABA" />
-          <View style={styles.challengeContent}>
-            <View>
-              <Text style={styles.subText}>5.15 ~ 8.15</Text>
-              <Text style={styles.titleText}>알고리즘 같이해요 !</Text>
-            </View>
-            <View>
-              <Text style={styles.subText}>9:00 - 16:00</Text>
-              <Text style={styles.countText}>10/10</Text>
-            </View>
-          </View>
-        </View>
-        <View style={styles.challengeCard}>
-          <Ionicons name="calendar" size={22} color="#BABABA" />
-          <View style={styles.challengeContent}>
-            <View>
-              <Text style={styles.subText}>5.15 ~ 8.15</Text>
-              <Text style={styles.titleText}>알고리즘 같이해요 !</Text>
-            </View>
-            <View>
-              <Text style={styles.subText}>9:00 - 16:00</Text>
-              <Text style={styles.countText}>10/10</Text>
-            </View>
-          </View>
-        </View>
-        <View style={styles.challengeCard}>
-          <Ionicons name="calendar" size={22} color="#BABABA" />
-          <View style={styles.challengeContent}>
-            <View>
-              <Text style={styles.subText}>5.15 ~ 8.15</Text>
-              <Text style={styles.titleText}>알고리즘 같이해요 !</Text>
-            </View>
-            <View>
-              <Text style={styles.subText}>9:00 - 16:00</Text>
-              <Text style={styles.countText}>10/10</Text>
-            </View>
-          </View>
-        </View>
-        <View style={styles.challengeCard}>
-          <Ionicons name="calendar" size={22} color="#BABABA" />
-          <View style={styles.challengeContent}>
-            <View>
-              <Text style={styles.subText}>5.15 ~ 8.15</Text>
-              <Text style={styles.titleText}>알고리즘 같이해요 !</Text>
-            </View>
-            <View>
-              <Text style={styles.subText}>9:00 - 16:00</Text>
-              <Text style={styles.countText}>10/10</Text>
-            </View>
-          </View>
-        </View>
-      </ScrollView>
-      <TouchableOpacity style={styles.fixedButton} onPress={goToMakeChallenge}>
-        <Text style={styles.buttonText}>Add Challenge</Text>
-      </TouchableOpacity>
+          ))}
+        </ScrollView>
+        <FixedBtn url="/make-challenge" label="Add Challenge" />
+      </View>
     </SafeAreaView>
   );
 }
@@ -126,6 +58,19 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     marginHorizontal: 5,
+  },
+  gradientButton: {
+    position: "absolute",
+    bottom: 20,
+    left: 20,
+    right: 20,
+    borderRadius: 14,
+    elevation: 5,
+  },
+  fixedButton: {
+    paddingVertical: 16,
+    borderRadius: 12,
+    alignItems: "center",
   },
   inputContainer: {
     height: 55,
@@ -146,15 +91,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#000",
   },
-  challengeSub: {
-    textAlign: "center",
-  },
-  title: {
-    flex: 1,
-    fontSize: 16,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
   challengeCard: {
     backgroundColor: "#fff",
     borderRadius: 15,
@@ -171,17 +107,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   challengeContent: {
-    display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     flex: 1,
     marginLeft: 10,
-  },
-  calendarIcon: {
-    width: 24,
-    height: 24,
-    marginRight: 12,
   },
   titleText: {
     fontSize: 16,
@@ -199,24 +129,9 @@ const styles = StyleSheet.create({
     color: "#24252C",
     textAlign: "center",
   },
-  fixedButton: {
-    position: "absolute",
-    bottom: 20,
-    left: 20,
-    right: 20,
-    backgroundColor: "#FF6A00",
-    paddingVertical: 16,
-    borderRadius: 12,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
-    elevation: 5,
-  },
   buttonText: {
     color: "#fff",
     fontWeight: "bold",
-    fontSize: 16,
+    fontSize: 18,
   },
 });

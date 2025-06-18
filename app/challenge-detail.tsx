@@ -1,4 +1,4 @@
-import { Ionicons } from "@expo/vector-icons";
+import Header from "@/components/Header";
 import { useRouter } from "expo-router";
 import React from "react";
 import {
@@ -15,105 +15,89 @@ export default function ChallengeDetail() {
   const router = useRouter();
 
   return (
-    <SafeAreaView>
-      <ScrollView>
-        <View style={styles.wrapper}>
-          <ScrollView contentContainerStyle={styles.scrollContent}>
-            <View style={styles.header}>
-              <View style={styles.iconRow}>
-                <Ionicons name="chevron-back" size={18} color="black" />
-                <Ionicons name="search-outline" size={18} color="black" />
-                <Ionicons name="people-outline" size={18} color="black" />
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.wrapper}>
+        <Header title="" background="#FE8C00" />
+        <ScrollView contentContainerStyle={styles.scrollContent}>
+          <View style={styles.headerDesc}>
+            <Text style={styles.challengeTitle}>자바 알고리즘 1일 1커밋</Text>
+            <View style={styles.dDayRow}>
+              <Text style={styles.dDayText}>D-12</Text>
+            </View>
+          </View>
+
+          <View style={styles.detailCon}>
+            <Text style={styles.sectionTitle}>Introduce</Text>
+            <Text style={styles.description}>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent
+              i챌린지 suere dui. In hac habitasse platea dictumst. Morbi vitae
+              tincidunt leo. Etiam id libero at turpis mollis posuere
+              consectetur.
+            </Text>
+
+            <Text style={styles.sectionTitle}>Rules</Text>
+            <Text style={styles.rules}>
+              Rules 1{"\n"}Rules 2{"\n"}Rules 3
+            </Text>
+
+            <Text style={styles.similarChallengeTitle}>Similar Challenge</Text>
+            <View style={styles.challengeCardRow}>
+              <View style={styles.challengeCard}>
+                <View style={styles.ellipse} />
+                <View style={styles.innerEllipse} />
+                <Image
+                  source={require("../assets/images/kakao.png")}
+                  style={styles.cardImage}
+                />
+                <Image
+                  source={require("../assets/images/kakao.png")}
+                  style={styles.editIcon}
+                />
               </View>
-              <Text style={styles.challengeTitle}>자바 알고리즘 1일 1커밋</Text>
-              <View style={styles.dDayRow}>
-                <Text style={styles.dDayText}>D-12</Text>
+              <View style={styles.challengeCard}>
+                <View
+                  style={[styles.ellipse, { backgroundColor: "#9059a733" }]}
+                />
+                <View
+                  style={[styles.innerEllipse, { backgroundColor: "#8f59a6" }]}
+                />
+                <Image
+                  source={require("../assets/images/kakao.png")}
+                  style={styles.cardImage}
+                />
+                <Image
+                  source={require("../assets/images/kakao.png")}
+                  style={styles.editIcon}
+                />
               </View>
             </View>
+          </View>
+        </ScrollView>
 
-            <View style={styles.detailCon}>
-              <Text style={styles.sectionTitle}>Introduce</Text>
-              <Text style={styles.description}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Praesent i챌린지 suere dui. In hac habitasse platea dictumst.
-                Morbi vitae tincidunt leo. Etiam id libero at turpis mollis
-                posuere consectetur.
-              </Text>
-
-              <Text style={styles.sectionTitle}>Rules</Text>
-              <Text style={styles.rules}>
-                Rules 1{"\n"}Rules 2{"\n"}Rules 3
-              </Text>
-
-              <Text style={styles.similarChallengeTitle}>
-                Similar Challenge
-              </Text>
-              <View style={styles.challengeCardRow}>
-                <View style={styles.challengeCard}>
-                  <View style={styles.ellipse} />
-                  <View style={styles.innerEllipse} />
-                  <Image
-                    source={require("../assets/images/kakao.png")}
-                    style={styles.cardImage}
-                  />
-                  <Image
-                    source={require("../assets/images/kakao.png")}
-                    style={styles.editIcon}
-                  />
-                </View>
-                <View style={styles.challengeCard}>
-                  <View
-                    style={[styles.ellipse, { backgroundColor: "#9059a733" }]}
-                  />
-                  <View
-                    style={[
-                      styles.innerEllipse,
-                      { backgroundColor: "#8f59a6" },
-                    ]}
-                  />
-                  <Image
-                    source={require("../assets/images/kakao.png")}
-                    style={styles.cardImage}
-                  />
-                  <Image
-                    source={require("../assets/images/kakao.png")}
-                    style={styles.editIcon}
-                  />
-                </View>
-              </View>
-            </View>
-          </ScrollView>
-
-          <TouchableOpacity
-            style={styles.bottomButton}
-            onPress={() => router.push("/make-challenge")}
-          >
-            <Text style={styles.buttonText}>Join Challenge</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+        <TouchableOpacity
+          style={styles.bottomButton}
+          onPress={() => router.push("/make-challenge")}
+        >
+          <Text style={styles.buttonText}>Join Challenge</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  wrapper: {
+  safeArea: {
     flex: 1,
     backgroundColor: "#fff",
   },
+  wrapper: {
+    flex: 1,
+    position: "relative",
+  },
   scrollContent: {
-    paddingBottom: 120,
+    paddingBottom: 140,
   },
-  iconRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 12,
-  },
-  icon: {
-    width: 24,
-    height: 24,
-  },
-  header: {
+  headerDesc: {
     backgroundColor: "#FE8C00",
     padding: 24,
   },

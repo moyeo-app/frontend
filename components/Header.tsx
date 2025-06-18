@@ -1,22 +1,35 @@
 import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-export default function Header({ title }: { title: string }) {
+export default function Header({
+  title,
+  background = "white",
+}: {
+  title: string;
+  background?: string;
+}) {
+  const router = useRouter();
+
   return (
-    <View style={styles.header}>
+    <View style={[styles.header, { backgroundColor: background }]}>
       <View style={styles.leftInfo}>
-        <Ionicons name="chevron-back" size={22} />
+        <TouchableOpacity onPress={() => router.back()}>
+          <Ionicons name="chevron-back" size={22} />
+        </TouchableOpacity>
         <Text style={styles.title}>{title}</Text>
       </View>
       <View style={styles.rightIcons}>
-        <Ionicons
-          name="search-outline"
-          size={22}
-          color="#BABABA"
-          style={styles.iconSpacing}
-        />
-        <Ionicons name="people-outline" size={22} color="#BABABA" />
+        <TouchableOpacity onPress={() => router.push("/search")}>
+          <Ionicons
+            name="search-outline"
+            size={22}
+            style={styles.iconSpacing}
+          />
+        </TouchableOpacity>
+
+        <Ionicons name="people-outline" size={22} />
       </View>
     </View>
   );

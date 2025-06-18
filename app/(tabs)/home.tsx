@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Home = () => {
   const today = new Date();
@@ -29,74 +30,78 @@ const Home = () => {
   const formattedDate = `Today, ${today.getDate()} ${monthNames[today.getMonth()]}`;
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <ImageBackground
-        source={require("../../assets/images/header_home.png")} // 원하는 이미지 경로로 변경
-        style={styles.headerHome}
-      >
-        <View style={styles.overlapGroup}>
-          <View style={styles.overlap}>
-            <View style={styles.profileImg}>
-              <Image
-                style={styles.chatgptImage}
-                source={require("../../assets/images/cat.png")}
-              />
+    <SafeAreaView>
+      <ScrollView style={styles.container}>
+        <ImageBackground
+          source={require("../../assets/images/header_home.png")} // 원하는 이미지 경로로 변경
+          style={styles.headerHome}
+        >
+          <View style={styles.overlapGroup}>
+            <View style={styles.overlap}>
+              <View style={styles.profileImg}>
+                <Image
+                  style={styles.chatgptImage}
+                  source={require("../../assets/images/cat.png")}
+                />
+              </View>
+            </View>
+            <Text style={styles.username}>예은</Text>
+          </View>
+        </ImageBackground>
+        <View style={styles.conHome}>
+          <View style={styles.dateContainer}>
+            <Text style={styles.todayDate}>{formattedDate}</Text>
+            <Text style={styles.yourActivities}>오늘의 챌린지</Text>
+          </View>
+
+          <View style={styles.calendarRow}>
+            <Text style={styles.calendarText}>{today.getDate() - 3}</Text>
+            <Text style={styles.calendarText}>{today.getDate() - 2}</Text>
+            <Text style={styles.calendarText}>{today.getDate() - 1}</Text>
+            <View style={styles.activeDate}>
+              <Text style={styles.activeDateText}>{formattedDate}</Text>
+            </View>
+            <Text style={styles.calendarText}>{today.getDate() + 1}</Text>
+            <Text style={styles.calendarText}>{today.getDate() + 2}</Text>
+            <Text style={styles.calendarText}>{today.getDate() + 3}</Text>
+          </View>
+
+          <View style={styles.scheduleBox}>
+            <Text style={styles.scheduleText}>6:00 - 7:00 미라클 모닝</Text>
+          </View>
+          <Text style={styles.scheduleTextGray}>9:00 - 16:00 모각코</Text>
+          <Text style={styles.scheduleTextGray}>20:00 - 21:00 : 알고리즘</Text>
+
+          <Text style={styles.selectChallenge}>
+            당신의 챌린지를 골라보세요 !
+          </Text>
+          <View style={styles.cardRow}>
+            <View style={styles.cardItem}>
+              <Text>모각코</Text>
+              <Text>₩ 20000</Text>
+            </View>
+            <View style={styles.cardItem}>
+              <Text>모각코</Text>
+              <Text>₩ 20000</Text>
+            </View>
+            <View style={styles.cardItem}>
+              <Text>모각코</Text>
+              <Text>₩ 20000</Text>
             </View>
           </View>
-          <Text style={styles.username}>예은</Text>
-        </View>
-      </ImageBackground>
-      <View style={styles.conHome}>
-        <View style={styles.dateContainer}>
-          <Text style={styles.todayDate}>{formattedDate}</Text>
-          <Text style={styles.yourActivities}>오늘의 챌린지</Text>
-        </View>
 
-        <View style={styles.calendarRow}>
-          <Text style={styles.calendarText}>{today.getDate() - 3}</Text>
-          <Text style={styles.calendarText}>{today.getDate() - 2}</Text>
-          <Text style={styles.calendarText}>{today.getDate() - 1}</Text>
-          <View style={styles.activeDate}>
-            <Text style={styles.activeDateText}>{formattedDate}</Text>
-          </View>
-          <Text style={styles.calendarText}>{today.getDate() + 1}</Text>
-          <Text style={styles.calendarText}>{today.getDate() + 2}</Text>
-          <Text style={styles.calendarText}>{today.getDate() + 3}</Text>
-        </View>
-
-        <View style={styles.scheduleBox}>
-          <Text style={styles.scheduleText}>6:00 - 7:00 미라클 모닝</Text>
-        </View>
-        <Text style={styles.scheduleTextGray}>9:00 - 16:00 모각코</Text>
-        <Text style={styles.scheduleTextGray}>20:00 - 21:00 : 알고리즘</Text>
-
-        <Text style={styles.selectChallenge}>당신의 챌린지를 골라보세요 !</Text>
-        <View style={styles.cardRow}>
-          <View style={styles.cardItem}>
-            <Text>모각코</Text>
-            <Text>₩ 20000</Text>
-          </View>
-          <View style={styles.cardItem}>
-            <Text>모각코</Text>
-            <Text>₩ 20000</Text>
-          </View>
-          <View style={styles.cardItem}>
-            <Text>모각코</Text>
-            <Text>₩ 20000</Text>
+          <View style={styles.btnContainer}>
+            <View style={styles.btnBackground}>
+              <Text style={styles.btnText}>맘에 드는 챌린지가 없나요 ?</Text>
+              <TouchableOpacity style={styles.makeNowBtn}>
+                <Text style={styles.makeNowText}>Make Now</Text>
+                {/* <IconlyBoldArrow /> */}
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
-
-        <View style={styles.btnContainer}>
-          <View style={styles.btnBackground}>
-            <Text style={styles.btnText}>맘에 드는 챌린지가 없나요 ?</Text>
-            <TouchableOpacity style={styles.makeNowBtn}>
-              <Text style={styles.makeNowText}>Make Now</Text>
-              {/* <IconlyBoldArrow /> */}
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
@@ -104,7 +109,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#ffffff",
     flex: 1,
-    justifyContent: "center",
   },
   headerHome: {
     width: "100%",

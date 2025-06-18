@@ -1,122 +1,137 @@
 import { Ionicons } from "@expo/vector-icons";
-import React from "react";
-import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { useRouter } from "expo-router";
+import React, { useState } from "react";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function search() {
-  return (
-    <SafeAreaView>
-      <ScrollView style={styles.container}>
-        <View style={styles.inputContainer}>
-          <Ionicons name="chevron-back" size={18} color="black" />
-          <TextInput
-            placeholder="Search Challenge"
-            placeholderTextColor="#878787"
-            style={styles.input}
-          />
-          <Ionicons name="search-outline" size={18} color="black" />
-        </View>
+export default function Search() {
+  const router = useRouter();
+  const [searchInput, setSearchInput] = useState("");
 
-        <Text style={styles.cancelText}>취소</Text>
+  const handleTagPress = (text: string) => {
+    setSearchInput(text);
+  };
+
+  return (
+    <SafeAreaView style={styles.safeArea}>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        <View style={styles.searchCon}>
+          <TouchableOpacity onPress={() => router.back()}>
+            <Ionicons name="chevron-back" size={22} />
+          </TouchableOpacity>
+          <View style={styles.inputRow}>
+            <TextInput
+              placeholder="Search Challenge"
+              placeholderTextColor="#878787"
+              style={styles.input}
+              value={searchInput}
+              onChangeText={setSearchInput}
+            />
+            <Ionicons name="search-outline" size={18} color="black" />
+          </View>
+          <TouchableOpacity onPress={() => setSearchInput("")}>
+            <Text style={styles.cancelText}>취소</Text>
+          </TouchableOpacity>
+        </View>
         <Text style={styles.recentSearchTitle}>최근 검색어</Text>
 
         <View style={styles.tagRow}>
-          <View style={styles.tag}>
+          <TouchableOpacity
+            style={styles.tag}
+            onPress={() => handleTagPress("프론트엔드")}
+          >
             <Text style={styles.tagText}>프론트엔드</Text>
-          </View>
-          <View style={styles.tag}>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.tag}
+            onPress={() => handleTagPress("알고리즘")}
+          >
             <Text style={styles.tagText}>알고리즘</Text>
-          </View>
-          <View style={styles.tag}>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.tag}
+            onPress={() => handleTagPress("CS 스터디")}
+          >
             <Text style={styles.tagText}>CS 스터디</Text>
-          </View>
+          </TouchableOpacity>
         </View>
 
         <View style={styles.tagRow}>
-          <View style={styles.longTag}>
+          <TouchableOpacity
+            style={styles.longTag}
+            onPress={() => handleTagPress("자바스크립트 알고리즘")}
+          >
             <Text style={styles.tagText}>자바스크립트 알고리즘</Text>
-          </View>
+          </TouchableOpacity>
         </View>
 
         <Text style={styles.recommendTitle}>추천 검색어</Text>
-        <Text style={styles.keywordList}>
-          flutter{"\n"}QA{"\n"}데이터{"\n"}프론트엔드
-        </Text>
-        <Text style={styles.keywordListRight}>
-          승무원 면접{"\n"}spring{"\n"}경력직 개발자{"\n"}과제 전형
-        </Text>
+
+        <View style={styles.keywordRow}>
+          <Text style={styles.keywordList}>
+            flutter{"\n"}QA{"\n"}데이터{"\n"}프론트엔드
+          </Text>
+          <Text style={styles.keywordList}>
+            승무원 면접{"\n"}spring{"\n"}경력직 개발자{"\n"}과제 전형
+          </Text>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  wrapper: {
+  safeArea: {
+    flex: 1,
     backgroundColor: "#fff",
+  },
+  scrollContent: {
+    padding: 20,
+  },
+  searchCon: {
+    flexDirection: "row",
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    marginBottom: 20,
   },
-  container: {
-    width: 393,
-    height: 852,
-    position: "relative",
-    backgroundColor: "#fff",
-  },
-  inputContainer: {
-    position: "absolute",
-    top: 27,
-    left: 36,
-    width: 307,
-    height: 50,
-    backgroundColor: "#f5f5f5",
-    borderRadius: 10,
+  inputRow: {
     flexDirection: "row",
     alignItems: "center",
+    backgroundColor: "#f5f5f5",
+    borderRadius: 10,
     paddingHorizontal: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 6, height: 6 },
-    shadowOpacity: 0.08,
-    shadowRadius: 60,
-  },
-  arrowIcon: {
-    width: 24,
-    height: 24,
-    marginRight: 10,
+    height: 50,
+    flex: 1,
   },
   input: {
     flex: 1,
     fontSize: 14,
     color: "#000",
-  },
-  rectangle: {
-    position: "absolute",
-    width: 331,
-    height: 52,
-    left: -31,
-    top: 630,
+    marginLeft: 8,
   },
   cancelText: {
-    position: "absolute",
-    top: 40,
-    left: 343,
     fontSize: 14,
     fontWeight: "500",
     color: "#000",
+    marginLeft: 10,
   },
   recentSearchTitle: {
-    position: "absolute",
-    top: 109,
-    left: 10,
     fontSize: 15,
     color: "#7e7e7e",
     fontFamily: "Jua-Regular",
+    marginBottom: 12,
   },
   tagRow: {
     flexDirection: "row",
-    position: "absolute",
-    top: 147,
-    left: 20,
+    flexWrap: "wrap",
+    marginBottom: 12,
   },
   tag: {
     borderWidth: 1,
@@ -125,6 +140,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 12,
     marginRight: 8,
+    marginBottom: 8,
   },
   longTag: {
     borderWidth: 1,
@@ -132,7 +148,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingVertical: 10,
     paddingHorizontal: 20,
-    marginTop: 60,
+    marginBottom: 12,
   },
   tagText: {
     fontSize: 14,
@@ -140,26 +156,17 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   recommendTitle: {
-    position: "absolute",
-    top: 307,
-    left: 10,
     fontSize: 15,
     color: "#7e7e7e",
     fontFamily: "Jua-Regular",
+    marginBottom: 12,
+    marginTop: 20,
+  },
+  keywordRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   keywordList: {
-    position: "absolute",
-    top: 337,
-    left: 25,
-    fontSize: 16,
-    color: "#000",
-    lineHeight: 29,
-    fontFamily: "Jua-Regular",
-  },
-  keywordListRight: {
-    position: "absolute",
-    top: 337,
-    left: 204,
     fontSize: 16,
     color: "#000",
     lineHeight: 29,
