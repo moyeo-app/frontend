@@ -1,14 +1,8 @@
+import FixedBtn from "@/components/FixedBtn";
 import Header from "@/components/Header";
 import { useRouter } from "expo-router";
 import React from "react";
-import {
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ChallengeDetail() {
@@ -20,66 +14,47 @@ export default function ChallengeDetail() {
         <Header title="" background="#FE8C00" />
         <ScrollView contentContainerStyle={styles.scrollContent}>
           <View style={styles.headerDesc}>
-            <Text style={styles.challengeTitle}>자바 알고리즘 1일 1커밋</Text>
+            <Text style={styles.dDayDesc}>시작까지 남은 날</Text>
             <View style={styles.dDayRow}>
-              <Text style={styles.dDayText}>D-12</Text>
+              <Text style={styles.dDayText}>D</Text>
+              <Text style={styles.dDayText}>+</Text>
+              <Text style={styles.dDayText}>3</Text>
             </View>
           </View>
 
           <View style={styles.detailCon}>
-            <Text style={styles.sectionTitle}>Introduce</Text>
-            <Text style={styles.description}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent
-              i챌린지 suere dui. In hac habitasse platea dictumst. Morbi vitae
-              tincidunt leo. Etiam id libero at turpis mollis posuere
-              consectetur.
-            </Text>
+            <View style={styles.detailItem}>
+              <Text style={styles.sectionTitle}>Title</Text>
+              <Text style={styles.challengeTitle}>자바 알고리즘 1일 1커밋</Text>
+            </View>
 
-            <Text style={styles.sectionTitle}>Rules</Text>
-            <Text style={styles.rules}>
-              Rules 1{"\n"}Rules 2{"\n"}Rules 3
-            </Text>
-
-            <Text style={styles.similarChallengeTitle}>Similar Challenge</Text>
-            <View style={styles.challengeCardRow}>
-              <View style={styles.challengeCard}>
-                <View style={styles.ellipse} />
-                <View style={styles.innerEllipse} />
-                <Image
-                  source={require("../assets/images/kakao.png")}
-                  style={styles.cardImage}
-                />
-                <Image
-                  source={require("../assets/images/kakao.png")}
-                  style={styles.editIcon}
-                />
-              </View>
-              <View style={styles.challengeCard}>
-                <View
-                  style={[styles.ellipse, { backgroundColor: "#9059a733" }]}
-                />
-                <View
-                  style={[styles.innerEllipse, { backgroundColor: "#8f59a6" }]}
-                />
-                <Image
-                  source={require("../assets/images/kakao.png")}
-                  style={styles.cardImage}
-                />
-                <Image
-                  source={require("../assets/images/kakao.png")}
-                  style={styles.editIcon}
-                />
+            <View style={styles.detailItem}>
+              <Text style={styles.sectionTitle}>Introduce</Text>
+              <Text style={styles.description}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Praesent i챌린지 suere dui. In hac habitasse platea dictumst.
+                Morbi vitae tincidunt leo. Etiam id libero at turpis mollis
+                posuere consectetur.
+              </Text>
+            </View>
+            <View style={styles.detailItem}>
+              <Text style={styles.sectionTitle}>Rules</Text>
+              <Text style={styles.rules}>
+                Rules 1{"\n"}Rules 2{"\n"}Rules 3
+              </Text>
+            </View>
+            <View style={styles.detailItem}>
+              <Text style={styles.similarChallengeTitle}>
+                Similar Challenge
+              </Text>
+              <View style={styles.challengeCardRow}>
+                <View style={styles.challengeCard}></View>
+                <View style={styles.challengeCard}></View>
               </View>
             </View>
           </View>
         </ScrollView>
-
-        <TouchableOpacity
-          style={styles.bottomButton}
-          onPress={() => router.push("/make-challenge")}
-        >
-          <Text style={styles.buttonText}>Join Challenge</Text>
-        </TouchableOpacity>
+        <FixedBtn label="Join Challenge" url="/home" />
       </View>
     </SafeAreaView>
   );
@@ -99,27 +74,42 @@ const styles = StyleSheet.create({
   },
   headerDesc: {
     backgroundColor: "#FE8C00",
-    padding: 24,
+    padding: 30,
   },
   detailCon: {
-    padding: 24,
+    paddingHorizontal: 24,
+  },
+  detailItem: {
+    borderBottomColor: "#D5D5D5",
+    borderBottomWidth: 1,
+    paddingVertical: 16,
   },
   challengeTitle: {
     fontSize: 25,
-    fontFamily: "Jua-Regular",
-    textAlign: "center",
+    fontFamily: "Paperlogy-Bold",
+    textAlign: "left",
     marginBottom: 12,
   },
   dDayRow: {
-    alignItems: "center",
     marginBottom: 16,
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 5,
   },
   dDayText: {
-    fontSize: 32,
+    fontFamily: "Paperlogy-Bold",
+    borderBottomColor: "white",
+    fontSize: 40,
     color: "#fff",
+    borderBottomWidth: 2,
     backgroundColor: "#fe8c00",
     padding: 8,
-    borderRadius: 8,
+  },
+  dDayDesc: {
+    fontFamily: "Paperlogy-Regular",
+    color: "#fff",
+    textAlign: "center",
+    fontSize: 16,
   },
   sectionTitle: {
     fontSize: 18,

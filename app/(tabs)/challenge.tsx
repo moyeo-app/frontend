@@ -1,11 +1,14 @@
 import FixedBtn from "@/components/FixedBtn";
 import Header from "@/components/Header";
 import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import React from "react";
 import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function challenge() {
+  const router = useRouter();
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <Header title="챌린지" />
@@ -17,6 +20,7 @@ export default function challenge() {
               placeholder="Search Challenge"
               placeholderTextColor="#878787"
               style={styles.input}
+              onFocus={() => router.push("/search")} // 여기에 route 이동
             />
             <Ionicons name="search-outline" size={18} color="black" />
           </View>

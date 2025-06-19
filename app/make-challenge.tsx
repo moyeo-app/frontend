@@ -1,11 +1,28 @@
 import FixedBtn from "@/components/FixedBtn";
 import Header from "@/components/Header";
 import { Ionicons } from "@expo/vector-icons";
-import React from "react";
-import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import React, { useState } from "react";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function MakeChallenge() {
+  const [rules, setRules] = useState<string[]>([]);
+  const [newRule, setNewRule] = useState("");
+  const [title, setTitle] = useState("");
+  const handleAddRule = () => {
+    if (newRule.trim() !== "") {
+      setRules((prev) => [...prev, newRule.trim()]);
+      setNewRule(""); // 입력창 초기화
+    }
+  };
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ flex: 1 }}>
@@ -13,7 +30,11 @@ export default function MakeChallenge() {
         <ScrollView contentContainerStyle={styles.container}>
           <View style={styles.inputGroup}>
             <Text style={styles.label}>1. 제목을 입력하세요.</Text>
-            <TextInput style={styles.input} value="모각코" />
+            <TextInput
+              style={styles.input}
+              value={title}
+              onChangeText={setTitle}
+            />
           </View>
 
           <View style={styles.inputGroup}>
@@ -56,23 +77,22 @@ export default function MakeChallenge() {
           <Text style={styles.label}>7. 챌린지 규칙을 정하세요.</Text>
           <View style={styles.feedbackBox}>
             <View style={styles.dot} />
-            <Text style={styles.feedbackText}>
-              팀원간의 피드백은 필수 입니다.
-            </Text>
-            <Ionicons name="add-outline" size={18} color="black" />
+            <TextInput
+              style={styles.feedbackTextInput}
+              placeholder="새로운 규칙 입력"
+              value={newRule}
+              onChangeText={setNewRule}
+            />
+            <TouchableOpacity onPress={handleAddRule}>
+              <Ionicons name="add-outline" size={24} color="black" />
+            </TouchableOpacity>
           </View>
-          <View style={styles.noticeBox}>
-            <View style={styles.dot} />
-            <Text style={styles.feedbackText}>
-              일주일 중 5일이상 참여해야 합니다.
-            </Text>
-          </View>
-          <View style={styles.noticeBox}>
-            <View style={styles.dot} />
-            <Text style={styles.feedbackText}>
-              인증 방식은 타이머를 통해 13:00 인증입니다.
-            </Text>
-          </View>
+          {rules.map((rule, index) => (
+            <View key={index} style={styles.noticeBox}>
+              <View style={styles.dot} />
+              <Text style={styles.feedbackText}>{rule}</Text>
+            </View>
+          ))}
         </ScrollView>
         <FixedBtn url="/challenge-detail" label="Create Challenge" />
       </View>
@@ -84,6 +104,7 @@ const styles = StyleSheet.create({
   container: {
     padding: 20,
     backgroundColor: "#fff",
+    paddingBottom: 95,
   },
   header: {
     flexDirection: "row",
@@ -121,6 +142,7 @@ const styles = StyleSheet.create({
   textArea: {
     height: 100,
     textAlignVertical: "top",
+    marginBottom: 20,
   },
   feedbackBox: {
     marginVertical: 20,
@@ -130,6 +152,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     position: "relative",
+  },
+  feedbackTextInput: {
+    flex: 1,
+    fontSize: 14,
+    paddingVertical: 8,
+    paddingHorizontal: 10,
+    borderBottomWidth: 1,
+    borderColor: "#ccc",
+    marginRight: 10,
+    color: "#000",
   },
   dot: {
     width: 8,
