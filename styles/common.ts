@@ -6,7 +6,7 @@ export const PrimaryButton = styled.TouchableOpacity`
   width: 100%;
   padding: 15px;
   align-items: center;
-  margin-top: 15px;
+  margin-top: 50px;
 `;
 
 export const PrimaryInput = styled.TextInput`
