@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
   Image,
   ImageBackground,
@@ -10,30 +10,39 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+const MONTH_NAMES = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
 const Home = () => {
   const today = new Date();
-  const monthNames = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
 
-  const formattedDate = `Today, ${today.getDate()} ${monthNames[today.getMonth()]}`;
+  const formattedDate = useMemo(() => {
+    return `Today, ${today.getDate()} ${MONTH_NAMES[today.getMonth()]}`;
+  }, [today]);
+
+  const renderDate = (offset: number) => {
+    const date = new Date(today);
+    date.setDate(today.getDate() + offset);
+    return date.getDate();
+  };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView edges={["top"]}>
       <ScrollView style={styles.container}>
         <ImageBackground
-          source={require("../../assets/images/header_home.png")} // 원하는 이미지 경로로 변경
+          source={require("@/assets/images/header_home.png")}
           style={styles.headerHome}
         >
           <View style={styles.overlapGroup}>
@@ -41,13 +50,14 @@ const Home = () => {
               <View style={styles.profileImg}>
                 <Image
                   style={styles.chatgptImage}
-                  source={require("../../assets/images/cat.png")}
+                  source={require("@/assets/images/cat.png")}
                 />
               </View>
             </View>
             <Text style={styles.username}>예은</Text>
           </View>
         </ImageBackground>
+
         <View style={styles.conHome}>
           <View style={styles.dateContainer}>
             <Text style={styles.todayDate}>{formattedDate}</Text>
@@ -55,15 +65,19 @@ const Home = () => {
           </View>
 
           <View style={styles.calendarRow}>
-            <Text style={styles.calendarText}>{today.getDate() - 3}</Text>
-            <Text style={styles.calendarText}>{today.getDate() - 2}</Text>
-            <Text style={styles.calendarText}>{today.getDate() - 1}</Text>
+            {[-3, -2, -1].map((offset) => (
+              <Text key={offset} style={styles.calendarText}>
+                {renderDate(offset)}
+              </Text>
+            ))}
             <View style={styles.activeDate}>
               <Text style={styles.activeDateText}>{formattedDate}</Text>
             </View>
-            <Text style={styles.calendarText}>{today.getDate() + 1}</Text>
-            <Text style={styles.calendarText}>{today.getDate() + 2}</Text>
-            <Text style={styles.calendarText}>{today.getDate() + 3}</Text>
+            {[1, 2, 3].map((offset) => (
+              <Text key={offset} style={styles.calendarText}>
+                {renderDate(offset)}
+              </Text>
+            ))}
           </View>
 
           <View style={styles.scheduleBox}>
@@ -75,19 +89,14 @@ const Home = () => {
           <Text style={styles.selectChallenge}>
             당신의 챌린지를 골라보세요 !
           </Text>
+
           <View style={styles.cardRow}>
-            <View style={styles.cardItem}>
-              <Text>모각코</Text>
-              <Text>₩ 20000</Text>
-            </View>
-            <View style={styles.cardItem}>
-              <Text>모각코</Text>
-              <Text>₩ 20000</Text>
-            </View>
-            <View style={styles.cardItem}>
-              <Text>모각코</Text>
-              <Text>₩ 20000</Text>
-            </View>
+            {[1, 2, 3].map((i) => (
+              <View key={i} style={styles.cardItem}>
+                <Text>모각코</Text>
+                <Text>₩ 20000</Text>
+              </View>
+            ))}
           </View>
 
           <View style={styles.btnContainer}>
@@ -95,7 +104,6 @@ const Home = () => {
               <Text style={styles.btnText}>맘에 드는 챌린지가 없나요 ?</Text>
               <TouchableOpacity style={styles.makeNowBtn}>
                 <Text style={styles.makeNowText}>Make Now</Text>
-                {/* <IconlyBoldArrow /> */}
               </TouchableOpacity>
             </View>
           </View>
@@ -108,7 +116,6 @@ const Home = () => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#ffffff",
-    flex: 1,
   },
   headerHome: {
     width: "100%",
@@ -143,11 +150,6 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     resizeMode: "contain",
-  },
-  dot: {
-    position: "absolute",
-    bottom: 0,
-    right: 0,
   },
   username: {
     marginTop: 8,
@@ -210,22 +212,21 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: "Paperlogy-Bold",
     marginTop: 40,
-    alignSelf: "stretch",
-    textAlign: "left",
+    alignSelf: "flex-start",
     width: "80%",
-    margin: "auto",
-  },
-  arrowIcon: {
-    width: 12,
-    height: 24,
-    resizeMode: "contain",
-    marginTop: 4,
   },
   cardRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     width: "90%",
     marginVertical: 15,
+  },
+  cardItem: {
+    backgroundColor: "#65CF58",
+    height: 130,
+    width: 110,
+    borderRadius: 24,
+    padding: 20,
   },
   btnContainer: {
     marginTop: 10,
@@ -236,16 +237,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#a3a0c9",
     borderRadius: 24,
     padding: 15,
-    alignItems: "center",
-    display: "flex",
     flexDirection: "row",
-    gap: 30,
     justifyContent: "center",
+    alignItems: "center",
   },
   btnText: {
     color: "#fff",
     fontSize: 16,
-    fontFamily: "Jua-Regular",
   },
   makeNowBtn: {
     flexDirection: "row",
@@ -253,20 +251,12 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 5,
     alignItems: "center",
+    marginLeft: 12,
   },
   makeNowText: {
     color: "#9e9bc7",
     fontSize: 12,
     fontWeight: "600",
-    marginRight: 4,
-  },
-  cardItem: {
-    backgroundColor: "#65CF58",
-    height: 130,
-    width: 110,
-    marginLeft: 20,
-    borderRadius: 24,
-    padding: 20,
   },
 });
 

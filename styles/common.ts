@@ -1,12 +1,16 @@
 import styled from "styled-components/native";
 
 export const PrimaryButton = styled.TouchableOpacity`
-  background-color: #cfe2ef;
-  border-radius: 30px;
+  background-color: #fe8c00;
+  border-radius: 15px;
   width: 100%;
   padding: 15px;
   align-items: center;
   margin-top: 50px;
+`;
+export const PrimaryButtonText = styled.Text`
+  color: white;
+  font-size: 18px;
 `;
 
 export const PrimaryInput = styled.TextInput`

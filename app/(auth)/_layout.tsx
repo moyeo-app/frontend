@@ -1,3 +1,4 @@
+import { CharacterProvider } from "@/contexts/CharacterContext";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import {
   DarkTheme,
@@ -14,8 +15,8 @@ export default function RootLayout() {
   const colorScheme = useColorScheme();
 
   const [fontsLoaded] = useFonts({
-    "Paperlogy-Regular": require("../assets/fonts/Paperlogy-4Regular.ttf"),
-    "Paperlogy-Bold": require("../assets/fonts/Paperlogy-7Bold.ttf"),
+    "Paperlogy-Regular": require("../../assets/fonts/Paperlogy-4Regular.ttf"),
+    "Paperlogy-Bold": require("../../assets/fonts/Paperlogy-7Bold.ttf"),
   });
 
   if (!fontsLoaded) return null;
@@ -23,8 +24,10 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <Stack screenOptions={{ headerShown: false }} />
-        <StatusBar style="auto" />
+        <CharacterProvider>
+          <Stack screenOptions={{ headerShown: false }} />
+          <StatusBar style="auto" />
+        </CharacterProvider>
       </ThemeProvider>
     </SafeAreaProvider>
   );
