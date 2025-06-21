@@ -4,13 +4,18 @@ import React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
 interface FixedBtnProps {
-  url: LinkProps["href"]; // 정확한 타입!
-  label?: string; // 기본값 있으니까 optional
+  url?: LinkProps["href"]; // url 있을 때만 router.push
+  label?: string;
+  onPress?: () => void; // 커스텀 onPress 지원
 }
 
-const FixedBtn = ({ url, label = "Add Challenge" }: FixedBtnProps) => {
+const FixedBtn = ({ url, label = "Add Challenge", onPress }: FixedBtnProps) => {
   const goToNext = () => {
-    router.push(url);
+    if (onPress) {
+      onPress(); // 커스텀 onPress 우선
+    } else if (url) {
+      router.push(url);
+    }
   };
 
   return (

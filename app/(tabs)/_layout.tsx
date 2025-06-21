@@ -1,6 +1,7 @@
 import CustomTabBar from "@/components/CustomTabBar";
 import { useFonts } from "expo-font";
 import { Tabs } from "expo-router";
+
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export default function TabLayout() {

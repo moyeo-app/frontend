@@ -16,7 +16,7 @@ export default function LoginScreen() {
   const router = useRouter();
 
   const handleLogin = () => {
-    router.push("/character-select");
+    router.push("/make-name");
   };
 
   return (
@@ -36,7 +36,7 @@ export default function LoginScreen() {
         onChangeText={setPw}
       />
       <PrimaryButton onPress={handleLogin}>
-        <PrimaryButtonText>로그인</PrimaryButtonText>
+        <PrimaryButtonText>Login</PrimaryButtonText>
       </PrimaryButton>
       <SocialCon>
         <KakaoLoginButton />

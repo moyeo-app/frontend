@@ -214,6 +214,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
     alignSelf: "flex-start",
     width: "80%",
+    margin: "auto",
   },
   cardRow: {
     flexDirection: "row",
