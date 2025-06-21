@@ -5,44 +5,47 @@ import React from "react";
 import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function challenge() {
+export default function Challenge() {
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
-      <Header title="챌린지" />
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#FCE3D2" }}>
+      <Header background="#FCE3D2" title="" />
+      <ScrollView contentContainerStyle={styles.wrapper}>
+        <Text style={styles.titleText}>
+          <Text style={styles.highlight}>모여모여님</Text>
+          {"\n"}
+          어떤 도전을 해볼까요?
+        </Text>
 
-      <View style={{ flex: 1 }}>
-        <ScrollView contentContainerStyle={styles.wrapper}>
-          <View style={styles.inputContainer}>
-            <TextInput
-              placeholder="Search Challenge"
-              placeholderTextColor="#878787"
-              style={styles.input}
+        <View style={styles.inputContainer}>
+          <Ionicons name="search-outline" size={20} />
+          <TextInput
+            placeholder="Search Challenge"
+            placeholderTextColor="#878787"
+            style={styles.input}
+          />
+        </View>
+
+        {Array.from({ length: 6 }).map((_, idx) => (
+          <View key={idx} style={styles.challengeCard}>
+            <Ionicons
+              name="calendar"
+              size={22}
+              color={idx === 0 ? "orange" : "#BABABA"}
             />
-            <Ionicons name="search-outline" size={18} color="black" />
-          </View>
-
-          {Array.from({ length: 6 }).map((_, idx) => (
-            <View key={idx} style={styles.challengeCard}>
-              <Ionicons
-                name="calendar"
-                size={22}
-                color={idx === 0 ? "orange" : "#BABABA"}
-              />
-              <View style={styles.challengeContent}>
-                <View>
-                  <Text style={styles.subText}>5.15 ~ 8.15</Text>
-                  <Text style={styles.titleText}>알고리즘 같이해요 !</Text>
-                </View>
-                <View>
-                  <Text style={styles.subText}>9:00 - 16:00</Text>
-                  <Text style={styles.countText}>10/10</Text>
-                </View>
+            <View style={styles.challengeContent}>
+              <View>
+                <Text style={styles.subText}>5.15 ~ 8.15</Text>
+                <Text style={styles.titleCardText}>알고리즘 같이해요 !</Text>
+              </View>
+              <View>
+                <Text style={styles.subText}>9:00 - 16:00</Text>
+                <Text style={styles.countText}>10/10</Text>
               </View>
             </View>
-          ))}
-        </ScrollView>
-        <FixedBtn url="/make-challenge" label="Add Challenge" />
-      </View>
+          </View>
+        ))}
+      </ScrollView>
+      <FixedBtn url="/make-challenge" label="Add Challenge" />
     </SafeAreaView>
   );
 }
@@ -50,52 +53,35 @@ export default function challenge() {
 const styles = StyleSheet.create({
   wrapper: {
     paddingBottom: 100,
-    padding: 20,
-    paddingTop: 0,
-    backgroundColor: "#fff",
+    paddingHorizontal: 20,
   },
-  icon: {
-    width: 24,
-    height: 24,
-    marginHorizontal: 5,
+  titleText: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
+    marginTop: 20,
+    lineHeight: 32,
   },
-  gradientButton: {
-    position: "absolute",
-    bottom: 20,
-    left: 20,
-    right: 20,
-    borderRadius: 14,
-    elevation: 5,
-  },
-  fixedButton: {
-    paddingVertical: 16,
-    borderRadius: 12,
-    alignItems: "center",
+  highlight: {
+    color: "#FE8C00",
   },
   inputContainer: {
-    height: 55,
-    borderRadius: 10,
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 6, height: 6 },
-    shadowOpacity: 0.08,
-    shadowRadius: 60,
-    marginVertical: 10,
-    borderWidth: 1,
-    borderColor: "#EAEAEA",
+    backgroundColor: "rgba(255,255,255,0.5)",
+    borderRadius: 30,
+    paddingHorizontal: 16,
+    height: 50,
+    marginBottom: 24,
   },
   input: {
     flex: 1,
-    fontSize: 14,
-    color: "#000",
+    fontSize: 16,
+    marginLeft: 10,
   },
   challengeCard: {
     backgroundColor: "#fff",
     borderRadius: 15,
-    borderColor: "#E9E9E9",
-    borderWidth: 1,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.05,
@@ -113,7 +99,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 10,
   },
-  titleText: {
+  titleCardText: {
     fontSize: 16,
     fontWeight: "600",
     color: "#24252C",
@@ -128,10 +114,5 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "#24252C",
     textAlign: "center",
-  },
-  buttonText: {
-    color: "#fff",
-    fontWeight: "bold",
-    fontSize: 18,
   },
 });
