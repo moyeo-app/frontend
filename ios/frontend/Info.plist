@@ -27,7 +27,8 @@
       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
-          <string>frontend</string>
+          <string>kakao1c0a804a8afe7865245ff5f3ecf3ab45</string>
+          <string>moyeomoyeo</string>
           <string>com.yeeun426.moyeomoyeo</string>
         </array>
       </dict>
@@ -37,6 +38,14 @@
           <string>exp+moyeomoyeo</string>
         </array>
       </dict>
+    </array>
+<!-- 카카오 네이티브 SDK 용 쿼리 -->
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>kakao1c0a804a8afe7865245ff5f3ecf3ab45</string>
+      <string>kakaokompassauth</string>
+      <string>storykompassauth</string>
+      <string>kakaolink</string>
     </array>
     <key>CFBundleVersion</key>
     <string>1</string>
@@ -81,5 +90,10 @@
     <string>Automatic</string>
     <key>UIViewControllerBasedStatusBarAppearance</key>
     <false/>
+
+    <key>KAKAO_APP_KEY</key>
+    <string>1c0a804a8afe7865245ff5f3ecf3ab45</string>
+    <key>KAKAO_APP_SCHEME</key>
+    <string>kakao1c0a804a8afe7865245ff5f3ecf3ab45</string>
   </dict>
 </plist>
