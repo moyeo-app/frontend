@@ -37,6 +37,13 @@
           "backgroundColor": "#ffffff"
         }
       ],
+      [
+        "@react-native-seoul/kakao-login",
+        {
+          "kakaoAppKey": "f187ae2a2e50ad49251c3a90946987e0",
+          "kakaoScheme": "kakaof187ae2a2e50ad49251c3a90946987e0"
+        }
+      ],
       "expo-web-browser"
     ],
     "experiments": {

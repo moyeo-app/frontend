@@ -2,6 +2,7 @@ import { PrimaryButton, PrimaryInput, WarningTxt } from "@/styles/common";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import {
+  Alert,
   Dimensions,
   StyleSheet,
   Text,
@@ -9,6 +10,7 @@ import {
   View,
 } from "react-native";
 import styled from "styled-components/native";
+import { userService } from "../service/apiService";
 
 export default function CharacterSelect() {
   const [selected, setSelected] = useState(0);
@@ -21,9 +23,29 @@ export default function CharacterSelect() {
     require("../assets/images/cat.png"),
     require("../assets/images/pig.png"),
   ];
+  const characterNames = ["RABBIT", "BEAR", "CAT", "PIG"];
 
-  const handleMain = () => {
-    router.replace({ pathname: "/(tabs)/home" });
+  const handleMain = async () => {
+    if (!nickname.trim()) {
+      Alert.alert("닉네임을 입력해주세요!");
+      return;
+    }
+
+    try {
+      const userId = await userService.postUsers({
+        provider: "KAKAO",
+        oauthId: "1234567890", // 실제 Kakao 로그인 후 받은 ID로 변경
+        nickname,
+        character: characterNames[selected],
+      });
+
+      console.log("등록된 사용자 ID:", userId);
+
+      // 등록 완료 후 홈으로 이동
+      router.replace({ pathname: "/(tabs)/home" });
+    } catch (error) {
+      console.error("회원 등록 실패:", error);
+    }
   };
 
   return (
