@@ -21,7 +21,7 @@ const KakaoLoginButton = () => {
         return;
       }
 
-      const response = await fetch(`${API_BASE_URL}/auth/login/kakao`, {
+      const response = await fetch(`${API_BASE_URL}/v1/auth/login/kakao`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -30,7 +30,7 @@ const KakaoLoginButton = () => {
           accessToken: token.accessToken,
         }),
       });
-
+      console.log("엥");
       const data = await response.json();
       console.log("백엔드 응답", data);
     } catch (err: any) {
