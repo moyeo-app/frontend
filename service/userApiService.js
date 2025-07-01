@@ -11,7 +11,7 @@ export async function apiRequest(url, options = {}) {
       if (errorData.message || errorData.error) {
         errorMessage += ` - ${errorData.message || errorData.error}`;
       }
-    } catch {
+    } catch (jsonParseError) {
       console.warn("JSON 파싱 실패:", jsonParseError);
     }
     throw new Error(errorMessage);
