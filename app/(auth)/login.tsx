@@ -16,7 +16,7 @@ export default function LoginScreen() {
   const router = useRouter();
 
   const handleLogin = () => {
-    router.push("/make-name");
+    router.push("/info-name");
   };
 
   return (

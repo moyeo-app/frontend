@@ -1,8 +1,9 @@
-import { useCharacter } from "@/contexts/CharacterContext";
+import { userService } from "@/service/userApiService";
 import { PrimaryButton } from "@/styles/common";
-import { useRouter } from "expo-router";
-import React from "react";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import React, { useState } from "react";
 import {
+  Alert,
   Dimensions,
   ImageSourcePropType,
   Pressable,
@@ -18,14 +19,41 @@ const CHARACTERS: ImageSourcePropType[] = [
   require("../../assets/images/pig_profile.png"),
 ];
 
+const CHARACTER_NAMES = ["CAT", "BEAR", "RABBIT", "PIG"];
 const CHARACTER_IMAGE_SIZE = 150;
 
 export default function CharacterSelectScreen() {
-  const { selectedCharacter, setSelectedCharacter } = useCharacter();
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+
+  const { nickname, bank, account } = useLocalSearchParams();
+  const nicknameStr = Array.isArray(nickname) ? nickname[0] : nickname;
+  const bankStr = Array.isArray(bank) ? bank[0] : bank;
+  const accountStr = Array.isArray(account) ? account[0] : account;
+
   const router = useRouter();
 
-  const handleGoToSuccess = () => {
-    router.replace({ pathname: "/success" });
+  const handleGoToSuccess = async () => {
+    try {
+      const result = await userService.postUsers({
+        provider: "KAKAO",
+        oauthId: "1234",
+        nickname: nicknameStr,
+        character: CHARACTER_NAMES[selectedIndex],
+      });
+
+      console.log("회원 등록 응답:", result);
+
+      router.replace({
+        pathname: "/success",
+        params: {
+          nickname: nicknameStr,
+          selectedCharacter: CHARACTER_NAMES[selectedIndex],
+        },
+      });
+    } catch (error) {
+      console.error("회원 등록 오류:", error);
+      Alert.alert("오류", "회원 등록에 실패했습니다. 다시 시도해주세요.");
+    }
   };
 
   return (
@@ -34,13 +62,15 @@ export default function CharacterSelectScreen() {
       <Text style={styles.subDesc}>
         캐릭터는 한번 고른 후 변경이 어렵습니다.
       </Text>
+
       <CharRow>
         {CHARACTERS.map((char, index) => (
-          <Pressable key={index} onPress={() => setSelectedCharacter(index)}>
-            <CharImg source={char} isSelected={selectedCharacter === index} />
+          <Pressable key={index} onPress={() => setSelectedIndex(index)}>
+            <CharImg source={char} isSelected={selectedIndex === index} />
           </Pressable>
         ))}
       </CharRow>
+
       <PrimaryButton onPress={handleGoToSuccess}>
         <PrimaryButtonText>START</PrimaryButtonText>
       </PrimaryButton>
