@@ -10,6 +10,8 @@ node_modules/
 dist/
 web-build/
 expo-env.d.ts
+ios/Pods/
+ios/build/
 
 # Native
 .kotlin/
@@ -81,3 +83,4 @@ yarn-error.*
 *.tsbuildinfo
 
 # @end expo-cli
+.env

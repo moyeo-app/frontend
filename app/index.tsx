@@ -4,27 +4,42 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { Image, StyleSheet, View } from "react-native";
 
+const SPLASH_TIMEOUT = 2500;
+const LOGO_SIZE = 200;
+const BACKGROUND_COLOR = "#FDE6D9";
+
 SplashScreen.preventAutoHideAsync();
 
-export default function SplashScreenPage() {
+export default function SplashScreenScreen() {
   const router = useRouter();
 
   const [fontsLoaded] = useFonts({
-    "Paperlogy-Regular": require("../assets/fonts/Paperlogy-4Regular.ttf"),
-    "Paperlogy-Bold": require("../assets/fonts/Paperlogy-7Bold.ttf"),
+    "Paperlogy-Regular": require("@/assets/fonts/Paperlogy-4Regular.ttf"),
+    "Paperlogy-Bold": require("@/assets/fonts/Paperlogy-7Bold.ttf"),
   });
 
   useEffect(() => {
-    if (fontsLoaded) {
-      SplashScreen.hideAsync();
-      const timer = setTimeout(() => {
-        router.replace("/login");
-      }, 2500);
-      return () => clearTimeout(timer);
-    }
-  }, [fontsLoaded]);
+    const hideSplashAndNavigate = async () => {
+      try {
+        await SplashScreen.hideAsync();
+        const timer = setTimeout(() => {
+          router.replace("/login");
+        }, SPLASH_TIMEOUT);
 
-  if (!fontsLoaded) return null;
+        return () => clearTimeout(timer);
+      } catch (error) {
+        console.warn("Failed to hide splash screen:", error);
+      }
+    };
+
+    if (fontsLoaded) {
+      hideSplashAndNavigate();
+    }
+  }, [fontsLoaded, router]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
 
   return (
     <View style={styles.container}>
@@ -41,7 +56,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#FDE6D9",
+    backgroundColor: BACKGROUND_COLOR,
   },
-  logo: { width: 200, height: 200 },
+  logo: {
+    width: LOGO_SIZE,
+    height: LOGO_SIZE,
+  },
 });

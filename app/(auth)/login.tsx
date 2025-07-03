@@ -1,10 +1,13 @@
 // app/login.tsx
 import GoogleLoginButton from "@/components/GoogleLoginButton";
 import KakaoLoginButton from "@/components/KakaoLoginButton";
-import { PrimaryButton, PrimaryInput } from "@/styles/common";
+import {
+  PrimaryButton,
+  PrimaryButtonText,
+  PrimaryInput,
+} from "@/styles/common";
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { Text } from "react-native";
 import styled from "styled-components/native";
 
 export default function LoginScreen() {
@@ -13,12 +16,12 @@ export default function LoginScreen() {
   const router = useRouter();
 
   const handleLogin = () => {
-    router.push("/character-select");
+    router.push("/make-name");
   };
 
   return (
     <Container>
-      <Logo source={require("../assets/images/icon.png")} />
+      <Logo source={require("../../assets/images/icon.png")} />
       <PrimaryInput
         placeholder="ID"
         placeholderTextColor="#CACACA"
@@ -33,7 +36,7 @@ export default function LoginScreen() {
         onChangeText={setPw}
       />
       <PrimaryButton onPress={handleLogin}>
-        <Text>로그인</Text>
+        <PrimaryButtonText>Login</PrimaryButtonText>
       </PrimaryButton>
       <SocialCon>
         <KakaoLoginButton />
