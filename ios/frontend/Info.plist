@@ -11,7 +11,7 @@
     <key>CFBundleExecutable</key>
     <string>$(EXECUTABLE_NAME)</string>
     <key>CFBundleIdentifier</key>
-    <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+    <string>com.yeeun426.moyeomoyeo</string>
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>CFBundleName</key>
@@ -27,7 +27,7 @@
       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
-          <string>frontend</string>
+          <string>moyeomoyeo</string>
           <string>com.yeeun426.moyeomoyeo</string>
         </array>
       </dict>
@@ -37,9 +37,26 @@
           <string>exp+moyeomoyeo</string>
         </array>
       </dict>
+      <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>kakaof187ae2a2e50ad49251c3a90946987e0</string>
+        </array>
+      </dict>
     </array>
     <key>CFBundleVersion</key>
     <string>1</string>
+    <key>KAKAO_APP_KEY</key>
+    <string>1c0a804a8afe7865245ff5f3ecf3ab45</string>
+    <key>KAKAO_APP_SCHEME</key>
+    <string>kakao1c0a804a8afe7865245ff5f3ecf3ab45</string>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>kakao1c0a804a8afe7865245ff5f3ecf3ab45</string>
+      <string>kakaokompassauth</string>
+      <string>storykompassauth</string>
+      <string>kakaolink</string>
+    </array>
     <key>LSMinimumSystemVersion</key>
     <string>12.0</string>
     <key>LSRequiresIPhoneOS</key>

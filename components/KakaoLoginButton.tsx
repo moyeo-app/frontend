@@ -1,43 +1,46 @@
-import { API_BASE_URL, KAKAO_CLIENT_ID } from "@env";
-import { ResponseType, useAuthRequest } from "expo-auth-session";
-import * as WebBrowser from "expo-web-browser";
-import React, { useEffect } from "react";
-import { Alert, Image } from "react-native";
+import { API_BASE_URL } from "@env";
+import * as KakaoLogin from "@react-native-seoul/kakao-login";
+import { useRouter } from "expo-router";
+import { Image } from "react-native";
 import styled from "styled-components/native";
 
-WebBrowser.maybeCompleteAuthSession();
-
-const discovery = {
-  authorizationEndpoint: "https://kauth.kakao.com/oauth/authorize",
-  tokenEndpoint: "https://kauth.kakao.com/oauth/token",
-};
-
 const KakaoLoginButton = () => {
-  const [request, response, promptAsync] = useAuthRequest(
-    {
-      clientId: KAKAO_CLIENT_ID,
-      redirectUri: "https://auth.expo.io/@yeeun426/moyeomoyeo",
-      responseType: ResponseType.Code,
-    },
-    discovery
-  );
-  useEffect(() => {
-    if (response?.type === "success" && response.params?.code) {
-      const code = response.params.code;
+  const router = useRouter();
 
-      fetch(`${API_BASE_URL}/auth/kakao/callback?code=${code}`)
-        .then((res) => res.json())
-        .then((data) => {
-          console.log("로그인 응답", data);
-          Alert.alert("로그인 성공", `안녕하세요, ${data.user.username}`);
-        })
-        .catch((err) => {
-          console.error("fetch error", err);
-        });
+  const handleLogin = async () => {
+    try {
+      console.log("진입");
+      await KakaoLogin.login();
+      console.log("카카오 로그인 완료");
+
+      const token = await KakaoLogin.getAccessToken();
+      console.log("Access Token:", token);
+
+      if (!token || !token.accessToken) {
+        console.log("AccessToken 없음");
+        return;
+      }
+
+      const response = await fetch(`${API_BASE_URL}/v1/auth/login/kakao`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          accessToken: token.accessToken,
+        }),
+      });
+      const data = await response.json();
+      console.log("백엔드 응답", data);
+
+      router.push("/character-select");
+    } catch (err: any) {
+      console.error("카카오 로그인 실패", err);
     }
-  }, [response]);
+  };
+
   return (
-    <SocialLoginBtn onPress={() => promptAsync()} disabled={!request}>
+    <SocialLoginBtn onPress={handleLogin}>
       <Image source={require("../assets/images/kakao.png")} />
     </SocialLoginBtn>
   );
@@ -45,4 +48,7 @@ const KakaoLoginButton = () => {
 
 export default KakaoLoginButton;
 
-const SocialLoginBtn = styled.TouchableOpacity``;
+const SocialLoginBtn = styled.TouchableOpacity`
+  align-items: center;
+  border-radius: 8px;
+`;

@@ -1,4 +1,5 @@
 // app/login.tsx
+import GoogleLoginButton from "@/components/GoogleLoginButton";
 import KakaoLoginButton from "@/components/KakaoLoginButton";
 import {
   PrimaryButton,
@@ -7,7 +8,6 @@ import {
 } from "@/styles/common";
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { Image } from "react-native";
 import styled from "styled-components/native";
 
 export default function LoginScreen() {
@@ -40,9 +40,7 @@ export default function LoginScreen() {
       </PrimaryButton>
       <SocialCon>
         <KakaoLoginButton />
-        <SocialLoginBtn>
-          <Image source={require("../../assets/images/google.png")} />
-        </SocialLoginBtn>
+        <GoogleLoginButton />
       </SocialCon>
     </Container>
   );
