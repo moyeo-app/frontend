@@ -1,11 +1,11 @@
 import { API_BASE_URL } from "@env";
 import * as KakaoLogin from "@react-native-seoul/kakao-login";
+import { useRouter } from "expo-router";
 import { Image } from "react-native";
 import styled from "styled-components/native";
 
 const KakaoLoginButton = () => {
-  console.log("KakaoLogin 모듈:", KakaoLogin);
-  console.log("백엔드 주소:", API_BASE_URL);
+  const router = useRouter();
 
   const handleLogin = async () => {
     try {
@@ -30,9 +30,10 @@ const KakaoLoginButton = () => {
           accessToken: token.accessToken,
         }),
       });
-      console.log("엥");
       const data = await response.json();
       console.log("백엔드 응답", data);
+
+      router.push("/character-select");
     } catch (err: any) {
       console.error("카카오 로그인 실패", err);
     }
@@ -48,8 +49,6 @@ const KakaoLoginButton = () => {
 export default KakaoLoginButton;
 
 const SocialLoginBtn = styled.TouchableOpacity`
-  width: 100%;
   align-items: center;
-  padding: 14px;
   border-radius: 8px;
 `;

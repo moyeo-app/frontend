@@ -27,4 +27,7 @@ export default function GoogleLoginButton() {
   );
 }
 
-const SocialLoginBtn = styled.TouchableOpacity``;
+const SocialLoginBtn = styled.TouchableOpacity`
+  align-items: center;
+  border-radius: 8px;
+`;
