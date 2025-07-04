@@ -1,4 +1,5 @@
 // app/login.tsx
+// import GoogleLoginButton from "@/components/GoogleLoginButton";
 import GoogleLoginButton from "@/components/GoogleLoginButton";
 import KakaoLoginButton from "@/components/KakaoLoginButton";
 import {
@@ -16,7 +17,7 @@ export default function LoginScreen() {
   const router = useRouter();
 
   const handleLogin = () => {
-    router.push("/make-name");
+    router.push("/info-name");
   };
 
   return (
@@ -39,8 +40,8 @@ export default function LoginScreen() {
         <PrimaryButtonText>Login</PrimaryButtonText>
       </PrimaryButton>
       <SocialCon>
-        <KakaoLoginButton />
         <GoogleLoginButton />
+        <KakaoLoginButton />
       </SocialCon>
     </Container>
   );

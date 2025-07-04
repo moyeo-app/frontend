@@ -1,9 +1,8 @@
-import { useCharacter } from "@/contexts/CharacterContext";
 import { PrimaryButton } from "@/styles/common";
 import { LinearGradient } from "expo-linear-gradient";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect } from "react";
-import { ImageSourcePropType, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import Animated, {
   Easing,
   useAnimatedStyle,
@@ -13,22 +12,21 @@ import Animated, {
 } from "react-native-reanimated";
 import styled from "styled-components/native";
 
-const CHARACTERS = ["cat", "bear", "rabbit", "pig"] as const;
-
-type CharacterType = (typeof CHARACTERS)[number];
-
-const CHARACTER_IMAGES: Record<CharacterType, ImageSourcePropType> = {
-  cat: require("../../assets/images/cat.png"),
-  bear: require("../../assets/images/bear.png"),
-  rabbit: require("../../assets/images/rabbit.png"),
-  pig: require("../../assets/images/pig.png"),
+const CHARACTER_IMAGES = {
+  CAT: require("../../assets/images/cat.png"),
+  BEAR: require("../../assets/images/bear.png"),
+  RABBIT: require("../../assets/images/rabbit.png"),
+  PIG: require("../../assets/images/pig.png"),
 };
 
-const SuccessScreen = () => {
-  const router = useRouter();
-  const { selectedCharacter } = useCharacter();
+export default function SuccessScreen() {
+  const { nickname, selectedCharacter } = useLocalSearchParams();
+  const nicknameStr = Array.isArray(nickname) ? nickname[0] : nickname;
+  const selectedCharStr = Array.isArray(selectedCharacter)
+    ? selectedCharacter[0]
+    : selectedCharacter;
 
-  const selectedAnimal = CHARACTERS[selectedCharacter];
+  const router = useRouter();
   const scale = useSharedValue(1);
 
   useEffect(() => {
@@ -60,11 +58,13 @@ const SuccessScreen = () => {
       <View style={styles.centerContent}>
         <Animated.Image
           style={[styles.characterImage, animatedStyle]}
-          source={CHARACTER_IMAGES[selectedAnimal]}
+          source={
+            CHARACTER_IMAGES[selectedCharStr as keyof typeof CHARACTER_IMAGES]
+          }
           resizeMode="contain"
         />
         <Text style={styles.subDesc}>회원가입 완료!</Text>
-        <Text style={styles.title}>모여모여님</Text>
+        <Text style={styles.title}>{nicknameStr}님</Text>
         <Text style={styles.title}>환영해요!</Text>
       </View>
       <PrimaryButton style={styles.startButton} onPress={handleGoToHome}>
@@ -72,9 +72,7 @@ const SuccessScreen = () => {
       </PrimaryButton>
     </LinearGradient>
   );
-};
-
-export default SuccessScreen;
+}
 
 const styles = StyleSheet.create({
   container: {

@@ -1,8 +1,9 @@
-// app/login.tsx
+import { userService } from "@/service/userApiService";
 import { PrimaryButton, PrimaryButtonText } from "@/styles/common";
-import { useRouter } from "expo-router";
-import React, { useEffect } from "react";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import { useEffect, useState } from "react";
 import {
+  Alert,
   Animated,
   Dimensions,
   StyleSheet,
@@ -11,8 +12,10 @@ import {
   View,
 } from "react-native";
 
-export default function Login() {
+export default function makeName() {
   const router = useRouter();
+  const [nickname, setNickname] = useState("");
+  const { provider, oauthId } = useLocalSearchParams(); // nickname 받음
 
   const fadeAnim = new Animated.Value(0);
   const slideAnim = new Animated.Value(30);
@@ -32,8 +35,21 @@ export default function Login() {
     ]).start();
   }, []);
 
-  const handleSelect = () => {
-    router.push("/character-select");
+  const handleSelect = async () => {
+    try {
+      const nicknameValidResult = await userService.postValidNickname({
+        nickname,
+      });
+      console.log("닉네임 유효성 응답:", nicknameValidResult);
+
+      router.push({
+        pathname: "/info-accounts",
+        params: { provider, oauthId, nickname },
+      });
+    } catch (error) {
+      console.error("닉네임 검사 실패:", error);
+      Alert.alert("닉네임이 유효하지 않습니다. 다시 입력해주세요.");
+    }
   };
 
   return (
@@ -50,10 +66,16 @@ export default function Login() {
             style={styles.input}
             placeholder="닉네임"
             placeholderTextColor="#bababa"
+            value={nickname}
+            onChangeText={setNickname}
           />
         </View>
 
-        <PrimaryButton style={styles.startButton} onPress={handleSelect}>
+        <PrimaryButton
+          style={styles.startButton}
+          onPress={handleSelect}
+          disabled={nickname.length <= 1}
+        >
           <PrimaryButtonText>Next</PrimaryButtonText>
         </PrimaryButton>
       </Animated.View>
