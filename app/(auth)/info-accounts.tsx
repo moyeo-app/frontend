@@ -21,26 +21,29 @@ export default function AccountInfo() {
 
   const handleNext = () => {
     console.log(selectedBank, accountNumber);
+    const bankCode = bankCodeMap[selectedBank] || "";
+
     router.push({
       pathname: "/info-character",
       params: {
         provider,
         oauthId,
         nickname,
-        bank: selectedBank,
+        bank: bankCode,
         account: accountNumber,
       },
     });
   };
 
-  const banks = [
-    "국민은행",
-    "신한은행",
-    "우리은행",
-    "하나은행",
-    "카카오뱅크",
-    "농협은행",
-  ];
+  const bankCodeMap: Record<string, string> = {
+    국민은행: "KB",
+    신한은행: "SHINHAN",
+    우리은행: "WOORI",
+    하나은행: "HANA",
+    카카오뱅크: "KAKAO",
+    농협은행: "NH",
+    토스뱅크: "TOSS",
+  };
 
   return (
     <View style={styles.container}>
@@ -64,7 +67,7 @@ export default function AccountInfo() {
         >
           <View style={styles.modalOverlay}>
             <View style={styles.modalContent}>
-              {banks.map((bank) => (
+              {Object.keys(bankCodeMap).map((bank) => (
                 <TouchableOpacity
                   key={bank}
                   onPress={() => {
