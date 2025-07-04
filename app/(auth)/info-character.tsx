@@ -1,7 +1,7 @@
 import { userService } from "@/service/userApiService";
 import { PrimaryButton } from "@/styles/common";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Alert,
   Dimensions,
@@ -25,7 +25,10 @@ const CHARACTER_IMAGE_SIZE = 150;
 export default function CharacterSelectScreen() {
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
-  const { nickname, bank, account } = useLocalSearchParams();
+  const { provider, oauthId, nickname, bank, account } = useLocalSearchParams();
+
+  const providerStr = Array.isArray(provider) ? provider[0] : provider;
+  const oauthIdStr = Array.isArray(oauthId) ? oauthId[0] : oauthId;
   const nicknameStr = Array.isArray(nickname) ? nickname[0] : nickname;
   const bankStr = Array.isArray(bank) ? bank[0] : bank;
   const accountStr = Array.isArray(account) ? account[0] : account;
@@ -35,10 +38,12 @@ export default function CharacterSelectScreen() {
   const handleGoToSuccess = async () => {
     try {
       const result = await userService.postUsers({
-        provider: "KAKAO",
-        oauthId: "1234",
+        provider: providerStr,
+        oauthId: oauthIdStr,
         nickname: nicknameStr,
         character: CHARACTER_NAMES[selectedIndex],
+        bank: bankStr,
+        accountNumber: accountStr,
       });
 
       console.log("회원 등록 응답:", result);

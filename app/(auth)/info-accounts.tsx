@@ -1,6 +1,6 @@
 import { PrimaryButton, PrimaryButtonText } from "@/styles/common";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Modal,
   Pressable,
@@ -13,7 +13,7 @@ import {
 
 export default function AccountInfo() {
   const router = useRouter();
-  const { nickname } = useLocalSearchParams(); // nickname 받음
+  const { provider, oauthId, nickname } = useLocalSearchParams(); // nickname 받음
 
   const [selectedBank, setSelectedBank] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
@@ -24,6 +24,8 @@ export default function AccountInfo() {
     router.push({
       pathname: "/info-character",
       params: {
+        provider,
+        oauthId,
         nickname,
         bank: selectedBank,
         account: accountNumber,

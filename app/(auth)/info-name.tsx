@@ -1,7 +1,7 @@
 import { userService } from "@/service/userApiService";
 import { PrimaryButton, PrimaryButtonText } from "@/styles/common";
-import { useRouter } from "expo-router";
-import React, { useEffect, useState } from "react";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import { useEffect, useState } from "react";
 import {
   Alert,
   Animated,
@@ -15,6 +15,7 @@ import {
 export default function makeName() {
   const router = useRouter();
   const [nickname, setNickname] = useState("");
+  const { provider, oauthId } = useLocalSearchParams(); // nickname 받음
 
   const fadeAnim = new Animated.Value(0);
   const slideAnim = new Animated.Value(30);
@@ -43,7 +44,7 @@ export default function makeName() {
 
       router.push({
         pathname: "/info-accounts",
-        params: { nickname },
+        params: { provider, oauthId, nickname },
       });
     } catch (error) {
       console.error("닉네임 검사 실패:", error);
