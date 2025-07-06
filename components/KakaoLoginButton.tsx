@@ -31,9 +31,14 @@ const KakaoLoginButton = () => {
         }),
       });
       const data = await response.json();
-      console.log("백엔드 응답", data);
 
-      router.push("/character-select");
+      router.push({
+        pathname: "/info-name",
+        params: {
+          provider: "KAKAO",
+          oauthId: data.data.oauthId,
+        },
+      });
     } catch (err: any) {
       console.error("카카오 로그인 실패", err);
     }

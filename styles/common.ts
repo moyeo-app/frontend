@@ -1,13 +1,15 @@
 import styled from "styled-components/native";
 
-export const PrimaryButton = styled.TouchableOpacity`
+export const PrimaryButton = styled.TouchableOpacity<{ disabled?: boolean }>`
   background-color: #fe8c00;
   border-radius: 15px;
   width: 100%;
   padding: 15px;
   align-items: center;
   margin-top: 50px;
+  opacity: ${(props) => (props.disabled ? 0.5 : 1)};
 `;
+
 export const PrimaryButtonText = styled.Text`
   color: white;
   font-size: 18px;
