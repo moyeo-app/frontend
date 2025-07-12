@@ -15,7 +15,6 @@ WebBrowser.maybeCompleteAuthSession();
 
 const GoogleLoginButton = () => {
   const router = useRouter();
-
   const [request, response, promptAsync] = Google.useAuthRequest({
     clientId: Platform.select({
       ios: GOOGLE_IOS_CLIENT_ID,
@@ -50,6 +49,17 @@ const GoogleLoginButton = () => {
           );
           const data = await backendResponse.json();
           console.log("백엔드 응답:", data);
+
+          if (!data.newUser) {
+            router.push({
+              pathname: "/home",
+              params: {
+                token: data.jwtAccessToken,
+              },
+            });
+          }
+
+          console.log("카카오oauthid", data);
           router.push({
             pathname: "/info-name",
             params: {
