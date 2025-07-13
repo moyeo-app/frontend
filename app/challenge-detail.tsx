@@ -1,8 +1,6 @@
 import Header from "@/components/Header";
 import { useRouter } from "expo-router";
-import React from "react";
 import {
-  Image,
   ScrollView,
   StyleSheet,
   Text,
@@ -42,34 +40,10 @@ export default function ChallengeDetail() {
 
             <Text style={styles.similarChallengeTitle}>Similar Challenge</Text>
             <View style={styles.challengeCardRow}>
-              <View style={styles.challengeCard}>
-                <View style={styles.ellipse} />
-                <View style={styles.innerEllipse} />
-                <Image
-                  source={require("../assets/images/kakao.png")}
-                  style={styles.cardImage}
-                />
-                <Image
-                  source={require("../assets/images/kakao.png")}
-                  style={styles.editIcon}
-                />
-              </View>
-              <View style={styles.challengeCard}>
-                <View
-                  style={[styles.ellipse, { backgroundColor: "#9059a733" }]}
-                />
-                <View
-                  style={[styles.innerEllipse, { backgroundColor: "#8f59a6" }]}
-                />
-                <Image
-                  source={require("../assets/images/kakao.png")}
-                  style={styles.cardImage}
-                />
-                <Image
-                  source={require("../assets/images/kakao.png")}
-                  style={styles.editIcon}
-                />
-              </View>
+              <View style={styles.challengeCard}></View>
+              <View style={styles.challengeCard}></View>
+              <View style={styles.challengeCard}></View>
+              <View style={styles.challengeCard}></View>
             </View>
           </View>
         </ScrollView>
@@ -146,10 +120,12 @@ const styles = StyleSheet.create({
   challengeCardRow: {
     flexDirection: "row",
     justifyContent: "space-between",
+    flexWrap: "wrap",
+    gap: 20,
   },
   challengeCard: {
-    width: 162,
-    height: 234,
+    width: 160,
+    height: 160,
     borderRadius: 19,
     borderColor: "#e5e5e5",
     borderWidth: 1,
