@@ -31,6 +31,16 @@ const KakaoLoginButton = () => {
         }),
       });
       const data = await response.json();
+      if (!data.newUser) {
+        router.push({
+          pathname: "/home",
+          params: {
+            token: data.jwtAccessToken,
+          },
+        });
+      }
+
+      console.log("카카오oauthid", data);
 
       router.push({
         pathname: "/info-name",
