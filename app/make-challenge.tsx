@@ -1,8 +1,9 @@
 import CustomDropdown from "@/components/CustomDropdown";
 import FixedBtn from "@/components/FixedBtn";
 import Header from "@/components/Header";
+import challengeApiService from "@/service/challengeService";
 import { router } from "expo-router";
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Modal,
   ScrollView,
@@ -16,13 +17,16 @@ import Animated, { FadeInDown, Layout } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function MakeChallenge() {
-  const [period, setPeriod] = useState("2025 / 5 / 15 - 2025 / 6 / 15");
-  const [peopleCount, setPeopleCount] = useState("10");
+  const [title, setTitle] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [peopleCnt, setPeopleCnt] = useState("");
+  const [weekAttend, setWeekAttend] = useState("");
   const [authType, setAuthType] = useState("타이머 인증");
-  const [timerValue, setTimerValue] = useState("13:00:00");
-  const [attendanceTimeRange, setAttendanceTimeRange] =
-    useState("09:00 ~ 18:00");
-  const [fee, setFee] = useState("20000원");
+  const [timerValue, setTimerValue] = useState("");
+  const [attendanceTimeRange, setAttendanceTimeRange] = useState("");
+  const [fee, setFee] = useState("");
+  const [description, setDescription] = useState("");
 
   const [isExpanded, setIsExpanded] = useState(false);
   const [isSummaryModalVisible, setIsSummaryModalVisible] = useState(false);
@@ -32,8 +36,48 @@ export default function MakeChallenge() {
     setIsExpanded(true);
   };
 
-  const handleCreateChallenge = () => {
-    setIsSummaryModalVisible(true);
+  const handleCreateChallenge = async () => {
+    try {
+      let option;
+
+      if (authType === "타이머 인증") {
+        const [hours, minutes] = timerValue.split(":").map(Number);
+        const totalMinutes = hours * 60 + minutes;
+        option = {
+          time: totalMinutes,
+        };
+      } else {
+        const [startTime, endTime] = attendanceTimeRange
+          .split("~")
+          .map((v) => v.trim());
+        option = {
+          start: startTime,
+          end: endTime,
+        };
+      }
+
+      const payload = {
+        title,
+        startDate,
+        endDate,
+        type:
+          authType === "타이머 인증"
+            ? "TIME"
+            : authType === "출석 인증"
+              ? "ATTENDANCE"
+              : "CONTENT",
+        maxParticipants: Number(peopleCnt),
+        fee: Number(fee),
+        description,
+        option,
+        rule: Number(weekAttend),
+        paymentId: "724f3ce4-7d8d-4fbf-852b-64a3252b83c5",
+      };
+      await challengeApiService.MakeChallenge(payload);
+      setIsSummaryModalVisible(true);
+    } catch (error) {
+      console.error("챌린지 생성 실패:", error);
+    }
   };
 
   const handleModalClose = () => {
@@ -45,42 +89,64 @@ export default function MakeChallenge() {
       <View style={{ flex: 1 }}>
         <Header background="transparent" title="챌린지 생성" />
         <ScrollView contentContainerStyle={styles.container}>
-          {/* 1 */}
           <View style={styles.inputGroup}>
             <Text style={styles.label}>1. 제목을 입력하세요.</Text>
-            <TextInput style={styles.input} value="모각코" />
-          </View>
-
-          {/* 2 */}
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>2. 기간을 입력하세요</Text>
             <TextInput
               style={styles.input}
-              value="2025 / 5 / 15 - 2025 / 6 / 15"
+              value={title}
+              onChangeText={setTitle}
+              placeholder="모각코"
             />
           </View>
 
-          {/* 3 */}
+          <View style={styles.inputGroup}>
+            <Text style={styles.label}>2-1. 시작일을 입력하세요</Text>
+            <TextInput
+              style={styles.input}
+              value={startDate}
+              onChangeText={setStartDate}
+              placeholder="2025-05-15"
+            />
+          </View>
+
+          <View style={styles.inputGroup}>
+            <Text style={styles.label}>2-2. 종료일을 입력하세요</Text>
+            <TextInput
+              style={styles.input}
+              value={endDate}
+              onChangeText={setEndDate}
+              placeholder="2025-06-15"
+            />
+          </View>
+
           <View style={styles.inputGroup}>
             <Text style={styles.label}>3. 인원을 입력하세요.</Text>
-            <TextInput style={styles.input} placeholder="(ex) 10" />
+            <TextInput
+              style={styles.input}
+              value={peopleCnt}
+              onChangeText={setPeopleCnt}
+              placeholder="(ex) 10"
+              keyboardType="numeric"
+            />
           </View>
 
-          {/* 4 */}
           <View style={styles.inputGroup}>
             <Text style={styles.label}>4. 주에 참여 횟수를 입력하세요.</Text>
-            <TextInput style={styles.input} placeholder="(ex) 3일" />
+            <TextInput
+              style={styles.input}
+              value={weekAttend}
+              onChangeText={setWeekAttend}
+              placeholder="(ex) 3"
+            />
           </View>
 
-          {/* 5 */}
           <CustomDropdown
             label="5. 인증 방식을 선택하세요."
-            options={["타이머 인증", "출석 인증"]}
+            options={["타이머 인증", "출석 인증", "내용 인증"]}
             value={authType}
             onSelect={handleSelectAuthType}
           />
 
-          {/* 5-1 */}
           {isExpanded && (
             <Animated.View
               key={authType}
@@ -90,46 +156,55 @@ export default function MakeChallenge() {
               <View style={styles.inputGroup}>
                 <Text style={styles.label}>
                   {authType === "타이머 인증"
-                    ? "5-1. 챌린지 출석 인증 타이머 시간을 정하세요."
-                    : "5-1. 챌린지 출석 인증시간을 정하세요. (시간 범위)"}
+                    ? "5-1. 타이머 시간을 입력하세요. (예: 13:00:00)"
+                    : authType === "출석 인증"
+                      ? "5-1. 출석 시간 범위를 입력하세요. (예: 09:00 ~ 18:00)"
+                      : "5-1. 키워드 설정 가능 시간을 입력하세요. (예: 09:00 ~ 18:00)"}
                 </Text>
                 <TextInput
                   style={styles.input}
-                  placeholder={
+                  value={
                     authType === "타이머 인증"
-                      ? "(ex) 13:00:00"
-                      : "(ex) 09:00 ~ 18:00"
+                      ? timerValue
+                      : attendanceTimeRange
+                  }
+                  onChangeText={
+                    authType === "타이머 인증"
+                      ? setTimerValue
+                      : setAttendanceTimeRange
+                  }
+                  placeholder={
+                    authType === "타이머 인증" ? "13:00:00" : "09:00 ~ 18:00"
                   }
                 />
               </View>
 
-              {/* 6 */}
               <View style={styles.inputGroup}>
                 <Text style={styles.label}>6. 참가비를 입력하세요.</Text>
-                <TextInput style={styles.input} placeholder="(ex) 20000원" />
+                <TextInput
+                  style={styles.input}
+                  value={fee}
+                  onChangeText={setFee}
+                  placeholder="(ex) 20000"
+                />
               </View>
 
-              {/* 6 */}
               <Text style={styles.label}>
                 7. 챌린지 세부 설명을 입력하세요.
               </Text>
               <TextInput
                 style={[styles.input, styles.textArea]}
                 multiline
+                value={description}
+                onChangeText={setDescription}
                 placeholder="설명 작성"
               />
             </Animated.View>
           )}
         </ScrollView>
-        <FixedBtn
-          label="Create Challenge"
-          onPress={() => {
-            handleCreateChallenge();
-          }}
-        />
+        <FixedBtn label="Create Challenge" onPress={handleCreateChallenge} />
       </View>
 
-      {/* Modal */}
       <Modal
         animationType="slide"
         transparent={true}
@@ -140,11 +215,13 @@ export default function MakeChallenge() {
           <View style={styles.modalContent}>
             <View style={styles.modalItem}>
               <Text style={styles.label}>기간:</Text>
-              <Text style={styles.value}>{period}</Text>
+              <Text style={styles.value}>
+                {startDate}-{endDate}
+              </Text>
             </View>
             <View style={styles.modalItem}>
               <Text style={styles.label}>인원 수:</Text>
-              <Text style={styles.value}>{peopleCount}</Text>
+              <Text style={styles.value}>{peopleCnt}</Text>
             </View>
             <View style={styles.modalItem}>
               <Text style={styles.label}>인증 방식:</Text>
@@ -201,7 +278,6 @@ const styles = StyleSheet.create({
     textAlignVertical: "top",
     marginBottom: 70,
   },
-  // Modal
   modalBackground: {
     flex: 1,
     backgroundColor: "rgba(0,0,0,0.3)",
@@ -213,12 +289,6 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 12,
     width: "85%",
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 12,
-    textAlign: "center",
   },
   modalItem: {
     flexDirection: "row",
